@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '172856993889',
     projectId: 'city-of-carnation',
     storageBucket: 'city-of-carnation.appspot.com',
-    iosClientId: '172856993889-5ramg5n8v60t4lh4de9edbv4v74hk2dr.apps.googleusercontent.com',
-    iosBundleId: 'com.example.cityOfCarnation',
+    iosClientId:
+        '172856993889-5ramg5n8v60t4lh4de9edbv4v74hk2dr.apps.googleusercontent.com',
+    iosBundleId: 'com.cityofcarnation.cityOfCarnation',
   );
 }
