@@ -23,7 +23,11 @@ class CityOfCarnation extends StatelessWidget {
     return MaterialApp(
       title: 'City Of Carnation',
       theme: ThemeData.dark().copyWith(),
-      home: const WelcomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const WelcomeScreen(),
+        '/login': (context) => const LoginScreen(),
+      },
     );
   }
 }
