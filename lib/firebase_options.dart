@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyArTFm2FAX1Ochjn_vNGwp0xRbh2C5_Crw',
-    appId: '1:172856993889:android:72a19b964327ad20bda220',
+    appId: '1:172856993889:android:94f5b1d6c8b4aa8dbda220',
     messagingSenderId: '172856993889',
     projectId: 'city-of-carnation',
     storageBucket: 'city-of-carnation.appspot.com',
@@ -59,12 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCiLXUK2VskBgcT4poojsZ2nce4PsBoSQY',
-    appId: '1:172856993889:ios:582b095262605a71bda220',
+    appId: '1:172856993889:ios:a72523819395aec5bda220',
     messagingSenderId: '172856993889',
     projectId: 'city-of-carnation',
     storageBucket: 'city-of-carnation.appspot.com',
-    iosClientId:
-        '172856993889-5ramg5n8v60t4lh4de9edbv4v74hk2dr.apps.googleusercontent.com',
+    iosClientId: '172856993889-834kbtna1n5khi8uqak2v3pjflk1qg7d.apps.googleusercontent.com',
     iosBundleId: 'com.cityofcarnation.cityOfCarnation',
   );
 }
