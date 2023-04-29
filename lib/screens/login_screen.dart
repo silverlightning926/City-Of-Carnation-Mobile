@@ -15,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,6 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(100, 75),
+                    backgroundColor: const Color(0xFF6C63FF),
                   ),
                   child: const Text('Login'),
                 ),
