@@ -1,4 +1,5 @@
 import 'package:city_of_carnation/screens/login_screen.dart';
+import 'package:city_of_carnation/screens/signup_screen.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class CityOfCarnation extends StatelessWidget {
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
       },
     );
   }

@@ -90,7 +90,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/signup'),
                         child: const Text('Register'),
                       ),
                     ],
