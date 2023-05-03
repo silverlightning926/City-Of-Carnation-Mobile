@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -10,6 +10,23 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,58 +40,126 @@ class _SignupScreenState extends State<SignupScreen> {
           children: [
             Text(
               "Register",
-              style: Theme.of(context).textTheme.headline2?.copyWith(
+              style: Theme.of(context).textTheme.headline2!.copyWith(
                     color: Colors.white,
                   ),
             ),
             Column(
-              children: const [
+              children: [
                 TextField(
-                  decoration: InputDecoration(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
                     labelText: 'Name',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 TextField(
-                  decoration: InputDecoration(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 TextField(
+                  controller: _phoneController,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Phone',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 TextField(
+                  controller: _confirmPasswordController,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Confirm Password',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ],
             ),
+            Visibility(
+              visible: false,
+              maintainState: true,
+              maintainSize: true,
+              maintainAnimation: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(70, 244, 67, 54),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Error Message',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                ),
+              ),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: Show Loading Indicator
+                    try {
+                      FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      )
+                          .then((value) {
+                        final user = <String, dynamic>{
+                          "name": _nameController.text,
+                          "email": _emailController.text,
+                          "phone": _phoneController.text,
+                        };
+
+                        FirebaseFirestore.instance
+                            .collection("userInfo")
+                            .doc('${value.user?.uid}')
+                            .set(user);
+                      }).then(
+                        (value) => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/home',
+                          (route) => false,
+                        ),
+                      );
+                    } on FirebaseAuthException catch (exception) {
+                      // TODO: Handle Exception through Error Message
+                      print(exception);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(100, 75),
                     backgroundColor: const Color(0xFF6C63FF),
