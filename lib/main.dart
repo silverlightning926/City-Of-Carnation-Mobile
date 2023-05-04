@@ -35,7 +35,7 @@ class CityOfCarnation extends StatelessWidget {
         ),
       ),
       initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/welcome' : '/home ',
+          FirebaseAuth.instance.currentUser == null ? '/welcome' : '/home',
       routes: {
         '/welcome': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginScreen(),
