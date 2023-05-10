@@ -1,12 +1,15 @@
+import 'package:city_of_carnation/screens/tabs/home_tab.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
+import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.userData});
+  const HomeScreen({super.key, required this.userData, required this.posts});
 
   final UserData userData;
+  final List<Post> posts;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,20 +18,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 0: Home',
-    ),
-    const Text(
-      'Index 1: Feed',
-    ),
-    const Text(
-      'Index 2: Notify',
-    ),
-    const Text(
-      'Index 3: Alerts',
-    ),
-  ];
+  late final Post _featuredPost;
+
+  late final List<Widget> _widgetOptions;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _featuredPost = widget.posts.firstWhere(
+      (element) => element.featured!,
+      orElse: () => widget.posts.first,
+    );
+
+    _widgetOptions = <Widget>[
+      HomeTab(
+        featuredPost: _featuredPost,
+      ),
+      const Text(
+        'Index 1: Business',
+      ),
+      const Text(
+        'Index 2: Events',
+      ),
+      const Text(
+        'Index 3: Contact',
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

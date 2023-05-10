@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -21,5 +22,12 @@ class FireStoreManager {
     final DocumentSnapshot<Map<String, dynamic>> user =
         await FirebaseFirestore.instance.collection("userInfo").doc(uid).get();
     return UserData.fromJson(user.data()!);
+  }
+
+  static Future<List<Post>> getPostData() async {
+    final QuerySnapshot<Map<String, dynamic>> post =
+        await FirebaseFirestore.instance.collection("post-feed").get();
+
+    return post.docs.map((e) => Post.fromJson(e.data())).toList();
   }
 }
