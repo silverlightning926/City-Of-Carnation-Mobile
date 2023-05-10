@@ -1,3 +1,5 @@
+import 'package:city_of_carnation/screens/login_screen.dart';
+import 'package:city_of_carnation/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -79,8 +81,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/login'),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          ),
                           child: const Text('Login'),
                         ),
                         const SizedBox(
@@ -98,8 +104,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/signup'),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignupScreen(),
+                            ),
+                          ),
                           child: const Text('Register'),
                         ),
                       ],

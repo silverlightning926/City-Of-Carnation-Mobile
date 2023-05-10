@@ -1,4 +1,5 @@
 import 'package:city_of_carnation/screens/home_screen.dart';
+import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:city_of_carnation/screens/login_screen.dart';
 import 'package:city_of_carnation/screens/signup_screen.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
@@ -34,14 +35,9 @@ class CityOfCarnation extends StatelessWidget {
               ),
         ),
       ),
-      initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/welcome' : '/home',
-      routes: {
-        '/welcome': (context) => const WelcomeScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignupScreen(),
-        '/home': (context) => const HomeScreen(),
-      },
+      home: FirebaseAuth.instance.currentUser == null
+          ? const WelcomeScreen()
+          : const LoadingScreen(),
     );
   }
 }

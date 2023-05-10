@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -102,7 +103,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: _passwordController.text,
                             )
                             .then((value) => {
-                                  Navigator.pushNamed(context, '/home'),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoadingScreen(),
+                                    ),
+                                  ),
                                 });
                       } on FirebaseAuthException catch (exception) {
                         // TODO: Handle FirebaseAuthException With Error Message

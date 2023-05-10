@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -149,11 +150,12 @@ class _SignupScreenState extends State<SignupScreen> {
                             .doc('${value.user?.uid}')
                             .set(user);
                       }).then(
-                        (value) => Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/home',
-                          (route) => false,
-                        ),
+                        (value) => Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoadingScreen(),
+                            ),
+                            (route) => false),
                       );
                     } on FirebaseAuthException catch (exception) {
                       // TODO: Handle Exception through Error Message
