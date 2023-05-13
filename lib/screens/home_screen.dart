@@ -1,15 +1,21 @@
 import 'package:city_of_carnation/screens/tabs/home_tab.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
+import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.userData, required this.posts});
+  const HomeScreen(
+      {super.key,
+      required this.userData,
+      required this.posts,
+      required this.events});
 
   final UserData userData;
   final List<Post> posts;
+  final List<Event> events;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   late final Post _featuredPost;
+  late final List<Event> _upcomingEvents;
 
   late final List<Widget> _widgetOptions;
 
@@ -31,18 +38,35 @@ class _HomeScreenState extends State<HomeScreen> {
       orElse: () => widget.posts.first,
     );
 
+    _upcomingEvents = widget.events
+        .where(
+          (element) => (element.startingTimestamp!.toDate().isAfter(
+                    DateTime.now(),
+                  ) &&
+              element.startingTimestamp!.toDate().isBefore(
+                    DateTime.now().add(
+                      const Duration(days: 7),
+                    ),
+                  )),
+        )
+        .toList();
+
     _widgetOptions = <Widget>[
       HomeTab(
         featuredPost: _featuredPost,
+        upcomingEvents: _upcomingEvents,
       ),
       const Text(
-        'Index 1: Business',
+        'Index 1: Feed',
       ),
       const Text(
-        'Index 2: Events',
+        'Index 2: Notify',
       ),
       const Text(
-        'Index 3: Contact',
+        'Index 3: Events',
+      ),
+      const Text(
+        'Index 4: Alerts',
       ),
     ];
   }
@@ -82,26 +106,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: Padding(
-            padding:
-                const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                  ),
-                  child: Text(
-                    'Hello ${widget.userData.name!.split(' ')[0]}!',
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.white,
-                        ),
-                  ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 20.0,
                 ),
-                _widgetOptions.elementAt(_selectedIndex),
-              ],
-            ),
+                child: Text(
+                  'Hello ${widget.userData.name!.split(' ')[0]}!',
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+              ),
+              _widgetOptions.elementAt(_selectedIndex),
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => setState(() => _selectedIndex = value),
@@ -119,6 +140,10 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.construction),
                 label: 'Notify',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month),
+                label: 'Alerts',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
