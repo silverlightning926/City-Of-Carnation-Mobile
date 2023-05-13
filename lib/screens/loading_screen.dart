@@ -1,5 +1,6 @@
 import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/screens/home_screen.dart';
+import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,16 +23,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
       [
         FireStoreManager.getUserData(FirebaseAuth.instance.currentUser!.uid),
         FireStoreManager.getPostData(),
+        FireStoreManager.getEventData(),
       ],
     ).then(
       (value) {
         final UserData userData = value[0] as UserData;
         final List<Post> posts = value[1] as List<Post>;
+        final List<Event> events = value[2] as List<Event>;
 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(userData: userData, posts: posts),
+            builder: (context) => HomeScreen(
+              userData: userData,
+              posts: posts,
+              events: events,
+            ),
           ),
         );
       },
