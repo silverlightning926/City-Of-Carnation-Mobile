@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -139,24 +140,20 @@ class _SignupScreenState extends State<SignupScreen> {
                         password: _passwordController.text,
                       )
                           .then((value) {
-                        final user = <String, dynamic>{
-                          "name": _nameController.text,
-                          "email": _emailController.text,
-                          "phone": _phoneController.text,
-                        };
-
-                        FirebaseFirestore.instance
-                            .collection("userInfo")
-                            .doc('${value.user?.uid}')
-                            .set(user);
-                      }).then(
-                        (value) => Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoadingScreen(),
-                            ),
-                            (route) => false),
-                      );
+                        FireStoreManager.addUserData(
+                                value.user!.uid,
+                                _nameController.text,
+                                _emailController.text,
+                                _phoneController.text)
+                            .then(
+                          (value) => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoadingScreen(),
+                              ),
+                              (route) => false),
+                        );
+                      });
                     } on FirebaseAuthException catch (exception) {
                       // TODO: Handle Exception through Error Message
                       print(exception);
