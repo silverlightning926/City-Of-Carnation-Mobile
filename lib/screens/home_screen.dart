@@ -1,3 +1,5 @@
+import 'package:city_of_carnation/screens/tabs/events_tab.dart';
+import 'package:city_of_carnation/screens/tabs/feed_tab.dart';
 import 'package:city_of_carnation/screens/tabs/home_tab.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
@@ -53,17 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _widgetOptions = <Widget>[
       HomeTab(
+        name: widget.userData.name!.split(' ')[0],
         featuredPost: _featuredPost,
         upcomingEvents: _upcomingEvents,
       ),
-      const Text(
-        'Index 1: Feed',
+      FeedTab(
+        posts: widget.posts,
       ),
       const Text(
         'Index 2: Notify',
       ),
-      const Text(
-        'Index 3: Events',
+      EventsTab(
+        events: widget.events,
       ),
       const Text(
         'Index 4: Alerts',
@@ -106,24 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  'Hello ${widget.userData.name!.split(' ')[0]}!',
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Colors.white,
-                      ),
-                ),
-              ),
-              _widgetOptions.elementAt(_selectedIndex),
-            ],
-          ),
+          body: _widgetOptions.elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => setState(() => _selectedIndex = value),
             currentIndex: _selectedIndex,
@@ -143,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month),
-                label: 'Alerts',
+                label: 'Events',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
