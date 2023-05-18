@@ -7,14 +7,17 @@ class Post {
   String? title;
   List<String>? body;
   Timestamp? timestamp;
+  List<String>? tags;
 
-  Post(
-      {this.image,
-      this.featured,
-      this.author,
-      this.title,
-      this.body,
-      this.timestamp});
+  Post({
+    this.image,
+    this.featured,
+    this.author,
+    this.title,
+    this.body,
+    this.timestamp,
+    this.tags,
+  });
 
   Post.fromJson(Map<String, dynamic> json) {
     image = json['image'];
@@ -23,6 +26,7 @@ class Post {
     title = json['title'];
     body = json['body'].cast<String>();
     timestamp = json['timestamp'];
+    tags = json['tags'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -33,6 +37,7 @@ class Post {
     data['name'] = title;
     data['body'] = body;
     data['timestamp'] = timestamp;
+    data['tags'] = tags;
     return data;
   }
 }
