@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/screens/news_screen.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,16 @@ class NewsCard extends StatelessWidget {
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewsScreen(
+                post: post,
+              ),
+            ),
+          );
+        },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Row(
