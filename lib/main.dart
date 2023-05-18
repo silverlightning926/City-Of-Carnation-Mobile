@@ -1,7 +1,4 @@
-import 'package:city_of_carnation/screens/home_screen.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
-import 'package:city_of_carnation/screens/login_screen.dart';
-import 'package:city_of_carnation/screens/signup_screen.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
