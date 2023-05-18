@@ -1,8 +1,11 @@
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:flutter/material.dart';
 
-class EventCard extends StatelessWidget {
-  const EventCard({super.key, required this.event});
+class MiniEventCard extends StatelessWidget {
+  const MiniEventCard({
+    Key? key,
+    required this.event,
+  }) : super(key: key);
 
   final Event event;
 
@@ -11,8 +14,8 @@ class EventCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: Ink(
-        width: MediaQuery.of(context).size.width,
-        height: 200,
+        width: MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
             colorFilter: ColorFilter.mode(
