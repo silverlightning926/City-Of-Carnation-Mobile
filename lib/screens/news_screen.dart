@@ -64,7 +64,7 @@ class NewsScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withOpacity(0.175),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(

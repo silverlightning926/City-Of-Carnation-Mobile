@@ -38,7 +38,7 @@ class HomeTab extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey[900],
+                    color: Colors.white.withOpacity(0.175),
                   ),
                   child: const Text(
                     'Welcome to the City Of Carnation mobile app! We want to make it easier for you to connect with your city. We hope you enjoy the app and find it useful. If you have any questions or feedback, please email us at cityhall@carnationwa.gov.',
