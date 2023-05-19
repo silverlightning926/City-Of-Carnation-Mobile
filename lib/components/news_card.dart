@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/news_screen.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,9 @@ class NewsCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage(post.image!),
+          image: CachedNetworkImageProvider(
+            post.image!,
+          ),
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.3),
             BlendMode.dstATop,

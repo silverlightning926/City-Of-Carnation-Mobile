@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/event_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,9 @@ class EventCard extends StatelessWidget {
               BlendMode.dstATop,
             ),
             fit: BoxFit.cover,
-            image: NetworkImage(event.image!),
+            image: CachedNetworkImageProvider(
+              event.image!,
+            ),
           ),
           borderRadius: BorderRadius.circular(10),
         ),

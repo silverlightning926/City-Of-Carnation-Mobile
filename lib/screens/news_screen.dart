@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,9 +41,10 @@ class NewsScreen extends StatelessWidget {
               ),
               background: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  post.image!,
-                  opacity: const AlwaysStoppedAnimation(0.4),
+                child: CachedNetworkImage(
+                  imageUrl: post.image!,
+                  color: Colors.black.withOpacity(0.5),
+                  colorBlendMode: BlendMode.dstATop,
                   fit: BoxFit.cover,
                 ),
               ),

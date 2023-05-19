@@ -39,9 +39,10 @@ class EventScreen extends StatelessWidget {
               ),
               background: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  event.image!,
-                  opacity: const AlwaysStoppedAnimation(0.4),
+                child: CachedNetworkImage(
+                  imageUrl: event.image!,
+                  color: Colors.black.withOpacity(0.5),
+                  colorBlendMode: BlendMode.dstATop,
                   fit: BoxFit.cover,
                 ),
               ),

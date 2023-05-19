@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/event_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +21,14 @@ class MiniEventCard extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.3),
-              BlendMode.dstATop,
-            ),
-            fit: BoxFit.cover,
-            image: NetworkImage(event.image!),
-          ),
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.3),
+                BlendMode.dstATop,
+              ),
+              fit: BoxFit.cover,
+              image: CachedNetworkImageProvider(
+                event.image!,
+              )),
           borderRadius: BorderRadius.circular(10),
         ),
         child: InkWell(
