@@ -1,5 +1,7 @@
+import 'package:city_of_carnation/screens/event_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({super.key, required this.event});
@@ -25,7 +27,16 @@ class EventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EventScreen(
+                  event: event,
+                ),
+              ),
+            );
+          },
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -53,7 +64,9 @@ class EventCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        event.startingTimestamp!.toDate().toLocal().toString(),
+                        DateFormat.yMMMMd().format(
+                          event.startingTimestamp!.toDate().toLocal(),
+                        ),
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ],

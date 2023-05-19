@@ -1,5 +1,7 @@
+import 'package:city_of_carnation/screens/event_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MiniEventCard extends StatelessWidget {
   const MiniEventCard({
@@ -14,7 +16,7 @@ class MiniEventCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: Ink(
-        width: MediaQuery.of(context).size.width * 0.5,
+        width: MediaQuery.of(context).size.width * 0.7,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -28,7 +30,16 @@ class MiniEventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EventScreen(
+                  event: event,
+                ),
+              ),
+            );
+          },
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -56,7 +67,9 @@ class MiniEventCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        event.startingTimestamp!.toDate().toLocal().toString(),
+                        DateFormat.yMMMMd().format(
+                          event.startingTimestamp!.toDate().toLocal(),
+                        ),
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ],
