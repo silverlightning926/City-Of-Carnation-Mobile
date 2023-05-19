@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cityofcarnation.city_of_carnation">
+    package="com.carnationwa.city_of_carnation">
    <application
         android:label="city_of_carnation"
         android:name="${applicationName}"
@@ -31,4 +31,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
