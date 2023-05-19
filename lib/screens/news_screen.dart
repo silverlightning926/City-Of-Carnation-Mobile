@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
