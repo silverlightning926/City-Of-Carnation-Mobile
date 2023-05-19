@@ -41,8 +41,8 @@ class EventScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 child: CachedNetworkImage(
                   imageUrl: event.image!,
-                  color: Colors.black.withOpacity(0.5),
-                  colorBlendMode: BlendMode.dstATop,
+                  color: const Color.fromARGB(188, 0, 0, 0),
+                  colorBlendMode: BlendMode.darken,
                   fit: BoxFit.cover,
                 ),
               ),

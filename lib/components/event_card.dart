@@ -18,9 +18,9 @@ class EventCard extends StatelessWidget {
         height: 200,
         decoration: BoxDecoration(
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.3),
-              BlendMode.dstATop,
+            colorFilter: const ColorFilter.mode(
+              Color.fromARGB(188, 0, 0, 0),
+              BlendMode.darken,
             ),
             fit: BoxFit.cover,
             image: CachedNetworkImageProvider(

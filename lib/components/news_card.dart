@@ -22,9 +22,9 @@ class NewsCard extends StatelessWidget {
           image: CachedNetworkImageProvider(
             post.image!,
           ),
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.3),
-            BlendMode.dstATop,
+          colorFilter: const ColorFilter.mode(
+            Color.fromARGB(188, 0, 0, 0),
+            BlendMode.darken,
           ),
           fit: BoxFit.cover,
         ),
