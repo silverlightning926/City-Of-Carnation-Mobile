@@ -3,6 +3,7 @@ import 'package:city_of_carnation/screens/home_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,6 +19,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
+
+    FirebaseAnalytics.instance.setUserId(
+      id: FirebaseAuth.instance.currentUser!.uid,
+    );
 
     Future.wait(
       [
@@ -39,6 +44,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               posts: posts,
               events: events,
             ),
+            settings: const RouteSettings(name: 'HomeScreen'),
           ),
         );
       },

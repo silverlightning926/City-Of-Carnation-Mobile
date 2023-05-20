@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
+  String? id;
   String? image;
   bool? featured;
   String? author;
@@ -10,6 +11,7 @@ class Post {
   List<String>? tags;
 
   Post({
+    this.id,
     this.image,
     this.featured,
     this.author,
@@ -19,7 +21,7 @@ class Post {
     this.tags,
   });
 
-  Post.fromJson(Map<String, dynamic> json) {
+  Post.fromJson({required String this.id, required Map<String, dynamic> json}) {
     image = json['image'];
     featured = json['featured'];
     author = json['author'];
@@ -31,6 +33,7 @@ class Post {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['image'] = image;
     data['featured'] = featured;
     data['author'] = author;

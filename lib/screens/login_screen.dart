@@ -1,4 +1,5 @@
 import 'package:city_of_carnation/screens/loading_screen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -108,8 +109,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           const LoadingScreen(),
+                                      settings: const RouteSettings(
+                                        name: 'LoadingScreen',
+                                      ),
                                     ),
                                   ),
+                                  FirebaseAnalytics.instance
+                                      .logLogin(loginMethod: 'email'),
                                 });
                       } on FirebaseAuthException catch (exception) {
                         // TODO: Handle FirebaseAuthException With Error Message

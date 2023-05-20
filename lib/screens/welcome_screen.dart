@@ -85,6 +85,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const LoginScreen(),
+                              settings: const RouteSettings(
+                                name: 'WelcomeScreen',
+                              ),
                             ),
                           ),
                           child: const Text('Login'),
@@ -108,6 +111,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const SignupScreen(),
+                              settings: const RouteSettings(
+                                name: 'WelcomeScreen',
+                              ),
                             ),
                           ),
                           child: const Text('Register'),

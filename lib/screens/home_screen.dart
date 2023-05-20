@@ -5,6 +5,7 @@ import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -91,13 +92,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   try {
                     FirebaseAuth.instance.signOut().then(
-                          (value) => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const WelcomeScreen(),
-                              ),
-                              (route) => false),
+                      (value) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const WelcomeScreen(),
+                            settings:
+                                const RouteSettings(name: 'WelcomeScreen'),
+                          ),
+                          (route) => false,
                         );
+                      },
+                    );
                   } on FirebaseAuthException catch (exception) {
                     print(exception);
                   }

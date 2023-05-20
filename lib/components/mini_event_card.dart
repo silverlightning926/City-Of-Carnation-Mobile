@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/event_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,12 +34,20 @@ class MiniEventCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: 'event_card_tapped',
+              parameters: <String, dynamic>{
+                'id': event.id,
+                'title': event.title,
+              },
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => EventScreen(
                   event: event,
                 ),
+                settings: const RouteSettings(name: 'EventScreen'),
               ),
             );
           },

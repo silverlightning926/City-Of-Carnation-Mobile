@@ -32,13 +32,27 @@ class FireStoreManager {
     final QuerySnapshot<Map<String, dynamic>> posts =
         await FirebaseFirestore.instance.collection("post-feed").get();
 
-    return posts.docs.map((e) => Post.fromJson(e.data())).toList();
+    return posts.docs
+        .map(
+          (e) => Post.fromJson(
+            id: e.id,
+            json: e.data(),
+          ),
+        )
+        .toList();
   }
 
   static Future<List<Event>> getEventData() async {
     final QuerySnapshot<Map<String, dynamic>> events =
         await FirebaseFirestore.instance.collection("event-info").get();
 
-    return events.docs.map((e) => Event.fromJson(e.data())).toList();
+    return events.docs
+        .map(
+          (e) => Event.fromJson(
+            id: e.id,
+            json: e.data(),
+          ),
+        )
+        .toList();
   }
 }

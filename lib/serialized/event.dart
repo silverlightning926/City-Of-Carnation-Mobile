@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
+  String? id;
   String? image;
   String? title;
   List<String>? body;
@@ -11,6 +12,7 @@ class Event {
   String? repeat;
 
   Event({
+    this.id,
     this.image,
     this.title,
     this.body,
@@ -21,7 +23,9 @@ class Event {
     this.repeat,
   });
 
-  Event.fromJson(Map<String, dynamic> json) {
+  Event.fromJson(
+      {required String this.id, required Map<String, dynamic> json}) {
+    id = id;
     image = json['imageURL'];
     title = json['title'];
     body = json['body'].cast<String>();
@@ -34,6 +38,7 @@ class Event {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['image'] = image;
     data['name'] = title;
     data['body'] = body;

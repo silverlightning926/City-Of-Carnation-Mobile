@@ -1,6 +1,7 @@
 import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -146,12 +147,20 @@ class _SignupScreenState extends State<SignupScreen> {
                                 _emailController.text,
                                 _phoneController.text)
                             .then(
-                          (value) => Navigator.pushAndRemoveUntil(
+                          (value) {
+                            FirebaseAnalytics.instance
+                                .logLogin(loginMethod: 'email');
+
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const LoadingScreen(),
+                                settings:
+                                    const RouteSettings(name: 'LoadingScreen'),
                               ),
-                              (route) => false),
+                              (route) => false,
+                            );
+                          },
                         );
                       });
                     } on FirebaseAuthException catch (exception) {
