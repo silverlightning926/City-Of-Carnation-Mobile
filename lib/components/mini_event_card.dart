@@ -18,8 +18,8 @@ class MiniEventCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: Ink(
-        width: MediaQuery.of(context).size.width * 0.7,
-        height: MediaQuery.of(context).size.height,
+        width: 250,
+        height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
               colorFilter: const ColorFilter.mode(

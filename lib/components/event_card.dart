@@ -15,7 +15,7 @@ class EventCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: Ink(
-        width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
           image: DecorationImage(

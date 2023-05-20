@@ -34,7 +34,7 @@ class HomeTab extends StatelessWidget {
             child: ListView(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
+                  width: double.infinity,
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
