@@ -1,11 +1,11 @@
 import 'package:city_of_carnation/screens/tabs/events_tab.dart';
 import 'package:city_of_carnation/screens/tabs/feed_tab.dart';
 import 'package:city_of_carnation/screens/tabs/home_tab.dart';
+import 'package:city_of_carnation/screens/tabs/notify_tab.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -63,9 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       FeedTab(
         posts: widget.posts,
       ),
-      const Text(
-        'Index 2: Notify',
-      ),
+      NotifyTab(),
       EventsTab(
         events: widget.events,
       ),

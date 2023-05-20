@@ -24,6 +24,8 @@ dependencies:
   maps_launcher: ^2.2.0
   cached_network_image: ^3.2.3
   firebase_analytics: ^10.4.1
+  firebase_storage: ^11.2.1
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
