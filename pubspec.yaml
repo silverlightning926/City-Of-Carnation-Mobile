@@ -26,6 +26,8 @@ dependencies:
   firebase_analytics: ^10.4.1
   firebase_storage: ^11.2.1
   dotted_border: ^2.0.0+3
+  image_picker: ^0.8.7+5
+  sanitize_filename: ^1.0.5
 
 dev_dependencies:
   flutter_test:

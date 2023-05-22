@@ -4,11 +4,12 @@ class WorkOrder {
   String? id;
   String? title;
   String? description;
-  GeoPoint? location;
+  String? location;
   Timestamp? timestamp;
   String? status;
-  String? priority;
-  List<String>? images;
+  int? priority;
+  String? image;
+  bool? isCompleted;
 
   WorkOrder({
     this.id,
@@ -18,7 +19,8 @@ class WorkOrder {
     this.timestamp,
     this.status,
     this.priority,
-    this.images,
+    this.image,
+    this.isCompleted,
   });
 
   WorkOrder.fromJson({required this.id, required Map<String, dynamic> json}) {
@@ -29,19 +31,20 @@ class WorkOrder {
     timestamp = json['timestamp'];
     status = json['status'];
     priority = json['priority'];
-    images = json['images'].cast<String>();
+    image = json['images'].cast<String>();
+    isCompleted = json['isCompleted'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
     data['title'] = title;
     data['description'] = description;
     data['location'] = location;
     data['timestamp'] = timestamp;
     data['status'] = status;
     data['priority'] = priority;
-    data['images'] = images;
+    data['images'] = image;
+    data['isCompleted'] = isCompleted;
     return data;
   }
 }

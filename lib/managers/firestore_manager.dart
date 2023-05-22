@@ -1,6 +1,7 @@
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
+import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreManager {
@@ -54,5 +55,12 @@ class FireStoreManager {
           ),
         )
         .toList();
+  }
+
+  static Future<void> createWorkOrder(String uid, WorkOrder workOrder) {
+    return FirebaseFirestore.instance
+        .collection("user-info/$uid/work-orders")
+        .doc()
+        .set(workOrder.toJson());
   }
 }
