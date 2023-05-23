@@ -59,7 +59,7 @@ class FireStoreManager {
 
   static Future<void> createWorkOrder(String uid, WorkOrder workOrder) {
     return FirebaseFirestore.instance
-        .collection("user-info/$uid/work-orders")
+        .collection('work-orders')
         .doc()
         .set(workOrder.toJson());
   }
