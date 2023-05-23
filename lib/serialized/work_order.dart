@@ -10,6 +10,7 @@ class WorkOrder {
   int? priority;
   String? image;
   bool? isCompleted;
+  String? creatorId;
 
   WorkOrder({
     this.id,
@@ -21,6 +22,7 @@ class WorkOrder {
     this.priority,
     this.image,
     this.isCompleted,
+    this.creatorId,
   });
 
   WorkOrder.fromJson({required this.id, required Map<String, dynamic> json}) {
@@ -33,6 +35,7 @@ class WorkOrder {
     priority = json['priority'];
     image = json['images'].cast<String>();
     isCompleted = json['isCompleted'];
+    creatorId = json['creatorId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +48,7 @@ class WorkOrder {
     data['priority'] = priority;
     data['images'] = image;
     data['isCompleted'] = isCompleted;
+    data['creatorId'] = creatorId;
     return data;
   }
 }

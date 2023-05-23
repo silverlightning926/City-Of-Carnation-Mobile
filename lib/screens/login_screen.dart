@@ -106,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password: _passwordController.text,
                               )
                               .then((value) => {
+                                    context.loaderOverlay.hide(),
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -115,8 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                           name: 'LoadingScreen',
                                         ),
                                       ),
-                                    ).then(
-                                      (value) => context.loaderOverlay.hide(),
                                     ),
                                     FirebaseAnalytics.instance
                                         .logLogin(loginMethod: 'email'),

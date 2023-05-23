@@ -154,6 +154,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                 FirebaseAnalytics.instance
                                     .logLogin(loginMethod: 'email');
 
+                                context.loaderOverlay.hide();
+
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -162,8 +164,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                         name: 'LoadingScreen'),
                                   ),
                                   (route) => false,
-                                ).then(
-                                  (value) => context.loaderOverlay.hide(),
                                 );
                               },
                             );

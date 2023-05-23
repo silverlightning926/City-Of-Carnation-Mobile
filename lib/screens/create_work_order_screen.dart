@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
@@ -197,39 +199,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                   onPressed: () {
                     context.loaderOverlay.show();
                     if (_pickedImage != null) {
-                      FirebaseStorage.instance
-                          .ref()
-                          .child(
-                            'user-storage/${FirebaseAuth.instance.currentUser!.uid}/work-orders/images/${sanitizeFilename(_pickedImage!.name)}',
-                          )
-                          .putFile(
-                            File(_pickedImage!.path),
-                          )
-                          .snapshot
-                          .ref
-                          .getDownloadURL()
-                          .then((value) {
-                            final WorkOrder workOrder = WorkOrder(
-                              title: _titleController.text,
-                              description: _descriptionController.text,
-                              location: _locationController.text,
-                              timestamp: Timestamp.now(),
-                              priority: list.indexOf(dropdownValue) + 1,
-                              image: value,
-                              status: 'Created',
-                              isCompleted: false,
-                            );
-
-                            FireStoreManager.createWorkOrder(
-                                FirebaseAuth.instance.currentUser!.uid,
-                                workOrder);
-                          })
-                          .then(
-                            (value) => Navigator.pop(context),
-                          )
-                          .then(
-                            (value) => context.loaderOverlay.hide(),
-                          );
+                      createWorkOrder();
                     }
                   },
                   child: const Text('Submit'),
@@ -242,6 +212,39 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
     );
   }
 
+  Future<void> createWorkOrder() async {
+    final UploadTask uploadTask = FirebaseStorage.instance
+        .ref()
+        .child(
+          'user-storage/${FirebaseAuth.instance.currentUser!.uid}/work-orders/images/${DateTime.now().millisecondsSinceEpoch}-${randomAlphaNumeric(5)}-${sanitizeFilename(_pickedImage!.name)}',
+        )
+        .putFile(
+          File(_pickedImage!.path),
+        );
+
+    final TaskSnapshot uploadedFile = (await uploadTask);
+    final String downloadURL = await uploadedFile.ref.getDownloadURL();
+
+    WorkOrder workOrder = WorkOrder(
+      title: _titleController.text,
+      description: _descriptionController.text,
+      location: _locationController.text,
+      priority: list.indexOf(dropdownValue) + 1,
+      image: downloadURL,
+      status: 'Pending',
+      timestamp: Timestamp.now(),
+      creatorId: FirebaseAuth.instance.currentUser!.uid,
+    );
+
+    FireStoreManager.createWorkOrder(
+      FirebaseAuth.instance.currentUser!.uid,
+      workOrder,
+    ).then((value) {
+      context.loaderOverlay.hide();
+      Navigator.of(context).pop();
+    });
+  }
+
   DecorationImage? getPickedPhoto() {
     if (_pickedImage != null) {
       return DecorationImage(
@@ -252,5 +255,11 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       );
     }
     return null;
+  }
+
+  randomAlphaNumeric(int i) {
+    var random = Random.secure();
+    var values = List<int>.generate(i, (i) => random.nextInt(256));
+    return base64Url.encode(values);
   }
 }
