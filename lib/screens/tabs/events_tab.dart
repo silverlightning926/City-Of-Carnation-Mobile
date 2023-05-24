@@ -1,8 +1,5 @@
 import 'package:city_of_carnation/components/event_card.dart';
-import 'package:city_of_carnation/components/mini_event_card.dart';
-import 'package:city_of_carnation/components/news_card.dart';
 import 'package:city_of_carnation/serialized/event.dart';
-import 'package:city_of_carnation/serialized/post.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
