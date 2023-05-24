@@ -241,6 +241,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       image: downloadURL,
       status: 'Pending',
       timestamp: Timestamp.now(),
+      isCompleted: false,
       creatorId: FirebaseAuth.instance.currentUser!.uid,
     );
 
