@@ -44,6 +44,14 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _locationController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: LoaderOverlay(
