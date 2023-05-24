@@ -196,7 +196,9 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                         child: Text(value),
                       );
                     }).toList(),
-                    onChanged: (value) => dropdownValue = value.toString(),
+                    onChanged: (value) => setState(() {
+                      dropdownValue = value.toString();
+                    }),
                     value: dropdownValue,
                     borderRadius: BorderRadius.circular(10),
                     underline: const SizedBox(),

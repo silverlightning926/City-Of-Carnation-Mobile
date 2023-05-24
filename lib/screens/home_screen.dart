@@ -6,19 +6,24 @@ import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
+import 'package:city_of_carnation/serialized/work_order.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen(
-      {super.key,
-      required this.userData,
-      required this.posts,
-      required this.events});
+  const HomeScreen({
+    super.key,
+    required this.userData,
+    required this.posts,
+    required this.events,
+    required this.workOrders,
+  });
 
   final UserData userData;
   final List<Post> posts;
   final List<Event> events;
+  final Stream<QuerySnapshot<Map<String, dynamic>>> workOrders;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -63,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
       FeedTab(
         posts: widget.posts,
       ),
-      NotifyTab(),
+      NotifyTab(
+        workOrderStream: widget.workOrders,
+      ),
       EventsTab(
         events: widget.events,
       ),

@@ -33,7 +33,7 @@ class WorkOrder {
     timestamp = json['timestamp'];
     status = json['status'];
     priority = json['priority'];
-    image = json['images'].cast<String>();
+    image = json['image'];
     isCompleted = json['isCompleted'];
     creatorId = json['creatorId'];
   }
@@ -46,7 +46,7 @@ class WorkOrder {
     data['timestamp'] = timestamp;
     data['status'] = status;
     data['priority'] = priority;
-    data['images'] = image;
+    data['image'] = image;
     data['isCompleted'] = isCompleted;
     data['creatorId'] = creatorId;
     return data;

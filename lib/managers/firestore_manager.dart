@@ -3,6 +3,7 @@ import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FireStoreManager {
   static Future<void> addUserData(
@@ -62,5 +63,13 @@ class FireStoreManager {
         .collection('work-orders')
         .doc()
         .set(workOrder.toJson());
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getWorkOrderStream(
+      String uid) {
+    return FirebaseFirestore.instance
+        .collection("work-orders")
+        .where("creatorId", isEqualTo: uid)
+        .snapshots();
   }
 }

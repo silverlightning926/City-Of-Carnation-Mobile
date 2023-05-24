@@ -3,6 +3,7 @@ import 'package:city_of_carnation/screens/home_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
       id: FirebaseAuth.instance.currentUser!.uid,
     );
 
+    Stream<QuerySnapshot<Map<String, dynamic>>> workOrderStream =
+        FireStoreManager.getWorkOrderStream(
+            FirebaseAuth.instance.currentUser!.uid);
+
     Future.wait(
       [
         FireStoreManager.getUserData(FirebaseAuth.instance.currentUser!.uid),
@@ -43,6 +48,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               userData: userData,
               posts: posts,
               events: events,
+              workOrders: workOrderStream,
             ),
             settings: const RouteSettings(name: 'HomeScreen'),
           ),
