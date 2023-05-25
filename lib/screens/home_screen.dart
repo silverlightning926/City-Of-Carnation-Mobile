@@ -65,17 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
         featuredPost: _featuredPost,
         upcomingEvents: _upcomingEvents,
       ),
-      FeedTab(
-        posts: widget.posts,
-      ),
       NotifyTab(
         workOrderStream: widget.workOrders,
       ),
+      FeedTab(
+        posts: widget.posts,
+      ),
       EventsTab(
         events: widget.events,
-      ),
-      const Text(
-        'Index 4: Alerts',
       ),
     ];
   }
@@ -131,20 +128,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.newspaper),
-                label: 'Feed',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.construction),
                 label: 'Notify',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month),
-                label: 'Events',
+                icon: Icon(Icons.newspaper),
+                label: 'Feed',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: 'Alerts',
+                icon: Icon(Icons.calendar_month),
+                label: 'Events',
               ),
             ],
           ),
