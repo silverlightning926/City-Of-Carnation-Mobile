@@ -78,7 +78,6 @@ class FireStoreManager {
     return FirebaseFirestore.instance
         .collection("work-orders")
         .where("creatorId", isEqualTo: uid)
-        .orderBy("timestamp", descending: true)
         .snapshots();
   }
 
