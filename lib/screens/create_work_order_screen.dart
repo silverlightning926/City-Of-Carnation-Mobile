@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -253,6 +254,12 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
     ).then((value) {
       context.loaderOverlay.hide();
       Navigator.of(context).pop();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'create_work_order',
+        parameters: <String, dynamic>{
+          'title': _titleController.text,
+        },
+      );
     });
   }
 

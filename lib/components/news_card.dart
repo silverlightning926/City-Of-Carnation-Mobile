@@ -39,13 +39,6 @@ class NewsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             onTap: () {
-              FirebaseAnalytics.instance.logEvent(
-                name: 'news_card_tapped',
-                parameters: <String, dynamic>{
-                  'id': post.id!,
-                  'title': post.title!,
-                },
-              );
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -54,6 +47,14 @@ class NewsCard extends StatelessWidget {
                   ),
                   settings: const RouteSettings(name: 'NewsScreen'),
                 ),
+              );
+
+              FirebaseAnalytics.instance.logEvent(
+                name: 'news_card_tapped',
+                parameters: <String, dynamic>{
+                  'id': post.id!,
+                  'title': post.title!,
+                },
               );
             },
             child: Padding(

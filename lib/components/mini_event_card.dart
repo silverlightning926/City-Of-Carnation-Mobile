@@ -36,13 +36,6 @@ class MiniEventCard extends StatelessWidget {
           ),
           child: InkWell(
             onTap: () {
-              FirebaseAnalytics.instance.logEvent(
-                name: 'event_card_tapped',
-                parameters: <String, dynamic>{
-                  'id': event.id,
-                  'title': event.title,
-                },
-              );
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -51,6 +44,14 @@ class MiniEventCard extends StatelessWidget {
                   ),
                   settings: const RouteSettings(name: 'EventScreen'),
                 ),
+              );
+
+              FirebaseAnalytics.instance.logEvent(
+                name: 'event_card_tapped',
+                parameters: <String, dynamic>{
+                  'id': event.id,
+                  'title': event.title,
+                },
               );
             },
             customBorder: RoundedRectangleBorder(
