@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/components/work_order_card.dart';
 import 'package:city_of_carnation/screens/create_work_order_screen.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
@@ -17,7 +16,11 @@ class NotifyTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 15,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

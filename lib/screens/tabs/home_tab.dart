@@ -19,7 +19,11 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.only(
+        top: 15,
+        left: 15,
+        right: 15,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -48,37 +52,51 @@ class HomeTab extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(
-                    'Featured News',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Text(
+                        'Featured News',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
-                  ),
+                    NewsCard(post: featuredPost),
+                  ],
                 ),
-                NewsCard(post: featuredPost),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(
-                    'Upcoming Events',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 250,
-                  child: ListView.builder(
-                      itemBuilder: (context, index) => MiniEventCard(
-                            event: upcomingEvents[index],
+                Visibility(
+                  visible: upcomingEvents.isNotEmpty,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text(
+                          'Upcoming Events',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
                           ),
-                      itemCount: upcomingEvents.length,
-                      scrollDirection: Axis.horizontal),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 250,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => MiniEventCard(
+                                  event: upcomingEvents[index],
+                                ),
+                            itemCount: upcomingEvents.length,
+                            scrollDirection: Axis.horizontal),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
