@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -35,8 +37,36 @@ class WorkOrderScreen extends StatelessWidget {
                 title: Text(
                   workOrder.title!,
                   textAlign: TextAlign.left,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    FireStoreManager.deleteWorkOrder(workOrder.id!).then(
+                      (value) {
+                        Navigator.pop(context);
+
+                        FirebaseAnalytics.instance.logEvent(
+                          name: 'work_order_deleted',
+                          parameters: {
+                            'work_order_id': workOrder.id,
+                            'work_order_title': workOrder.title,
+                          },
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Work Order Deleted'),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
@@ -122,8 +152,8 @@ class WorkOrderScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 15),
                         ClipRRect(
-                          child: CachedNetworkImage(imageUrl: workOrder.image!),
                           borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(imageUrl: workOrder.image!),
                         ),
                       ],
                     ),

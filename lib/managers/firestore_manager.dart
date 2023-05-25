@@ -72,4 +72,11 @@ class FireStoreManager {
         .where("creatorId", isEqualTo: uid)
         .snapshots();
   }
+
+  static Future<void> deleteWorkOrder(String workOrderId) {
+    return FirebaseFirestore.instance
+        .collection('work-orders')
+        .doc(workOrderId)
+        .delete();
+  }
 }
