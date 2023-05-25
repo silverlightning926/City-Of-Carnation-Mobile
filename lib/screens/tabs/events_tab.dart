@@ -21,23 +21,21 @@ class _EventsTabState extends State<EventsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 15,
-        left: 15,
-        right: 15,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Text(
             'Events',
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Colors.white,
                 ),
           ),
-          const SizedBox(height: 10),
-          Row(
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -103,23 +101,25 @@ class _EventsTabState extends State<EventsTab> {
               ),
             ],
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.events.length,
-              itemBuilder: ((context, index) {
-                if (widget.events[index].startingTimestamp!.toDate().month ==
-                        selectedMonth &&
-                    widget.events[index].startingTimestamp!.toDate().year ==
-                        selectedYear) {
-                  return EventCard(event: widget.events[index]);
-                } else {
-                  return const SizedBox();
-                }
-              }),
-            ),
-          )
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            itemCount: widget.events.length,
+            itemBuilder: ((context, index) {
+              if (widget.events[index].startingTimestamp!.toDate().month ==
+                      selectedMonth &&
+                  widget.events[index].startingTimestamp!.toDate().year ==
+                      selectedYear) {
+                return EventCard(event: widget.events[index]);
+              } else {
+                return const SizedBox();
+              }
+            }),
+          ),
+        )
+      ],
     );
   }
 }
