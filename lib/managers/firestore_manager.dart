@@ -3,7 +3,6 @@ import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class FireStoreManager {
   static Future<void> addUserData(
@@ -31,8 +30,11 @@ class FireStoreManager {
   }
 
   static Future<List<Post>> getPostData() async {
-    final QuerySnapshot<Map<String, dynamic>> posts =
-        await FirebaseFirestore.instance.collection("post-feed").get();
+    final QuerySnapshot<Map<String, dynamic>> posts = await FirebaseFirestore
+        .instance
+        .collection("post-feed")
+        .orderBy("timestamp", descending: true)
+        .get();
 
     return posts.docs
         .map(
@@ -46,7 +48,13 @@ class FireStoreManager {
 
   static Future<List<Event>> getEventData() async {
     final QuerySnapshot<Map<String, dynamic>> events =
-        await FirebaseFirestore.instance.collection("event-info").get();
+        await FirebaseFirestore.instance
+            .collection("event-info")
+            .orderBy(
+              "startingTimestamp",
+              descending: false,
+            )
+            .get();
 
     return events.docs
         .map(
@@ -70,6 +78,7 @@ class FireStoreManager {
     return FirebaseFirestore.instance
         .collection("work-orders")
         .where("creatorId", isEqualTo: uid)
+        .orderBy("timestamp", descending: true)
         .snapshots();
   }
 
