@@ -3,6 +3,25 @@ import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestore_cache/firestore_cache.dart';
+
+final userInfoRef = FirebaseFirestore.instance.collection('user-info');
+
+final postFeedRef = FirebaseFirestore.instance.collection('post-feed');
+final postFeedQuery = postFeedRef.orderBy("timestamp", descending: true);
+const postFeedCacheField = "lastUpdated";
+
+final eventInfoRef = FirebaseFirestore.instance.collection('event-info');
+final eventInfoQuery =
+    eventInfoRef.orderBy("startingTimestamp", descending: false);
+const eventInfoCacheField = "lastUpdated";
+
+final workOrdersRef = FirebaseFirestore.instance.collection('work-orders');
+
+final postFeedCacheRef =
+    FirebaseFirestore.instance.collection('status').doc('post-feed');
+final eventInfoCacheRef =
+    FirebaseFirestore.instance.collection('status').doc('event-info');
 
 class FireStoreManager {
   static Future<void> addUserData(
@@ -17,24 +36,23 @@ class FireStoreManager {
       "phone": phone,
     };
 
-    return FirebaseFirestore.instance
-        .collection("user-info")
-        .doc(uid)
-        .set(user);
+    return userInfoRef.doc(uid).set(user);
   }
 
   static Future<UserData> getUserData(String uid) async {
     final DocumentSnapshot<Map<String, dynamic>> user =
-        await FirebaseFirestore.instance.collection("user-info").doc(uid).get();
+        await userInfoRef.doc(uid).get();
+
     return UserData.fromJson(user.data()!);
   }
 
   static Future<List<Post>> getPostData() async {
-    final QuerySnapshot<Map<String, dynamic>> posts = await FirebaseFirestore
-        .instance
-        .collection("post-feed")
-        .orderBy("timestamp", descending: true)
-        .get();
+    final QuerySnapshot<Map<String, dynamic>> posts =
+        await FirestoreCache.getDocuments(
+      query: postFeedQuery,
+      cacheDocRef: postFeedCacheRef,
+      firestoreCacheField: postFeedCacheField,
+    );
 
     return posts.docs
         .map(
@@ -48,13 +66,11 @@ class FireStoreManager {
 
   static Future<List<Event>> getEventData() async {
     final QuerySnapshot<Map<String, dynamic>> events =
-        await FirebaseFirestore.instance
-            .collection("event-info")
-            .orderBy(
-              "startingTimestamp",
-              descending: false,
-            )
-            .get();
+        await FirestoreCache.getDocuments(
+      query: eventInfoQuery,
+      cacheDocRef: eventInfoCacheRef,
+      firestoreCacheField: eventInfoCacheField,
+    );
 
     return events.docs
         .map(
@@ -67,24 +83,15 @@ class FireStoreManager {
   }
 
   static Future<void> createWorkOrder(String uid, WorkOrder workOrder) {
-    return FirebaseFirestore.instance
-        .collection('work-orders')
-        .doc()
-        .set(workOrder.toJson());
+    return workOrdersRef.doc().set(workOrder.toJson());
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getWorkOrderStream(
       String uid) {
-    return FirebaseFirestore.instance
-        .collection("work-orders")
-        .where("creatorId", isEqualTo: uid)
-        .snapshots();
+    return workOrdersRef.where("creatorId", isEqualTo: uid).snapshots();
   }
 
   static Future<void> deleteWorkOrder(String workOrderId) {
-    return FirebaseFirestore.instance
-        .collection('work-orders')
-        .doc(workOrderId)
-        .delete();
+    return workOrdersRef.doc(workOrderId).delete();
   }
 }
