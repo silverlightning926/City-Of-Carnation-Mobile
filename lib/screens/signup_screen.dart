@@ -1,5 +1,6 @@
 import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
+import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -144,12 +145,17 @@ class _SignupScreenState extends State<SignupScreen> {
                             password: _passwordController.text,
                           )
                               .then((value) {
+                            UserData user = UserData(
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              phone: _phoneController.text,
+                              uid: value.user!.uid,
+                            );
+
                             FireStoreManager.addUserData(
-                                    value.user!.uid,
-                                    _nameController.text,
-                                    _emailController.text,
-                                    _phoneController.text)
-                                .then(
+                              value.user!.uid,
+                              user,
+                            ).then(
                               (value) {
                                 FirebaseAnalytics.instance
                                     .logLogin(loginMethod: 'email');

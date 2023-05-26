@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/screens/settings_screen.dart';
 import 'package:city_of_carnation/screens/tabs/events_tab.dart';
 import 'package:city_of_carnation/screens/tabs/feed_tab.dart';
 import 'package:city_of_carnation/screens/tabs/home_tab.dart';
@@ -79,27 +80,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [
                 IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {
-                    try {
-                      FirebaseAuth.instance.signOut().then(
-                        (value) {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WelcomeScreen(),
-                              settings:
-                                  const RouteSettings(name: 'WelcomeScreen'),
-                            ),
-                            (route) => false,
-                          );
-                        },
-                      );
-                    } on FirebaseAuthException catch (exception) {
-                      print(exception);
-                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsScreen(
+                          userData: snapshot.data!,
+                          userDataStream: widget.userDataStream,
+                        ),
+                      ),
+                    );
                   },
                   icon: const Icon(
-                    Icons.logout,
+                    Icons.settings,
                     size: 30,
                   ),
                 ),
