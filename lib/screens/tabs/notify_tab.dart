@@ -1,7 +1,6 @@
 import 'package:city_of_carnation/components/work_order_card.dart';
 import 'package:city_of_carnation/screens/create_work_order_screen.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -95,7 +94,7 @@ class NotifyTab extends StatelessWidget {
                     children: [
                       Text(
                         'Open',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.white,
                             ),
                       ),
@@ -118,7 +117,7 @@ class NotifyTab extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         'Closed',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.white,
                             ),
                       ),

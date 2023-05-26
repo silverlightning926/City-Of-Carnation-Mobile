@@ -37,12 +37,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: Text(
                           'City of Carnation',
                           textAlign: TextAlign.center,
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                color: Colors.white,
+                                fontSize: 40,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ),
                       ),
                       Padding(
@@ -54,7 +56,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           'Your Natural Destination in the Valleys of Washington!',
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     color: Colors.grey[400],
                                     fontWeight: FontWeight.w400,
                                   ),

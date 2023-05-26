@@ -28,7 +28,7 @@ class CityOfCarnation extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
           color: Colors.black,
-          titleTextStyle: Theme.of(context).textTheme.headline4!.copyWith(
+          titleTextStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
                 color: Colors.white,
                 fontSize: 28,
               ),

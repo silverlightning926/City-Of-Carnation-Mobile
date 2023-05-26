@@ -75,7 +75,7 @@ class NewsScreen extends StatelessWidget {
                                 'By ${post.author}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -87,7 +87,7 @@ class NewsScreen extends StatelessWidget {
                                 'On ${DateFormat.yMMMMd().format(post.timestamp!.toDate())}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2!
+                                    .titleSmall!
                                     .copyWith(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -122,7 +122,7 @@ class NewsScreen extends StatelessWidget {
                               paragraph,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .copyWith(
                                     fontSize: 20,
                                     height: 1.3,

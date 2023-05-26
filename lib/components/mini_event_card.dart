@@ -69,13 +69,13 @@ class MiniEventCard extends StatelessWidget {
                       children: [
                         Text(
                           event.title!,
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           event.locationName!,
                           style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: Colors.white,
                                     fontSize: 18,
                                   ),
@@ -85,7 +85,7 @@ class MiniEventCard extends StatelessWidget {
                           DateFormat.yMMMMd().format(
                             event.startingTimestamp!.toDate().toLocal(),
                           ),
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
                     ),

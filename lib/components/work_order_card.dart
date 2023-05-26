@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/work_order_screen.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class WorkOrderCard extends StatelessWidget {
@@ -70,7 +69,7 @@ class WorkOrderCard extends StatelessWidget {
                       workOrder.title!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: Colors.white,
                           ),
                     ),
@@ -79,7 +78,7 @@ class WorkOrderCard extends StatelessWidget {
                       workOrder.status!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: Colors.white,
                           ),
                     ),

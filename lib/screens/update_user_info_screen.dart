@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class UpdateUserInfoScreen extends StatefulWidget {
-  UpdateUserInfoScreen(
+  const UpdateUserInfoScreen(
       {super.key, required this.updateType, required this.userData});
 
   final UpdateType updateType;

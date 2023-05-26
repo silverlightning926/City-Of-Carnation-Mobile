@@ -75,7 +75,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                   'Enter A Title',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 15),
@@ -91,7 +91,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                   'Enter A Description',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 15),
@@ -108,7 +108,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                   'Add Image',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 15),
@@ -159,7 +159,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                   'Enter A Location',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 15),
@@ -175,7 +175,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                   'Enter A Priority',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 15),

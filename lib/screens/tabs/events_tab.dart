@@ -69,7 +69,7 @@ class _EventsTabState extends State<EventsTab> {
                           DateTime(selectedYear, selectedMonth),
                         ),
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.white,
                             ),
                       ),

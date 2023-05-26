@@ -93,7 +93,7 @@ class WorkOrderScreen extends StatelessWidget {
                                   '${workOrder.status}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle1!
+                                      .titleMedium!
                                       .copyWith(
                                         color: Colors.white,
                                         fontSize: 22,
@@ -107,7 +107,7 @@ class WorkOrderScreen extends StatelessWidget {
                                   )}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2!
+                                      .titleSmall!
                                       .copyWith(
                                         color: Colors.white,
                                         fontSize: 18,
@@ -120,7 +120,7 @@ class WorkOrderScreen extends StatelessWidget {
                                   'At ${workOrder.location}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2!
+                                      .titleSmall!
                                       .copyWith(
                                         color: Colors.white,
                                         fontSize: 18,
@@ -133,7 +133,7 @@ class WorkOrderScreen extends StatelessWidget {
                                   'Priority Level ${workOrder.priority}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2!
+                                      .titleSmall!
                                       .copyWith(
                                         color: Colors.white,
                                         fontSize: 18,
@@ -148,7 +148,7 @@ class WorkOrderScreen extends StatelessWidget {
                           Text(
                             workOrder.description!,
                             style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       color: Colors.white,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w400,

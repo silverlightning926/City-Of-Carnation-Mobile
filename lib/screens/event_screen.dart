@@ -73,7 +73,7 @@ class EventScreen extends StatelessWidget {
                                 'At ${event.locationName}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -87,7 +87,7 @@ class EventScreen extends StatelessWidget {
                                 )}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2!
+                                    .titleSmall!
                                     .copyWith(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -228,7 +228,7 @@ class EventScreen extends StatelessWidget {
                               paragraph,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .copyWith(
                                     fontSize: 20,
                                     height: 1.3,

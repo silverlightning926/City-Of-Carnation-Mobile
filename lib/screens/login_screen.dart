@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Text(
                   "Login",
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         color: Colors.white,
                       ),
                 ),
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'Error Message',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: Colors.white,
                             ),
                       ),

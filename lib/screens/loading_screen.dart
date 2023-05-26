@@ -4,7 +4,6 @@ import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

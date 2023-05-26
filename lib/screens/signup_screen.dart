@@ -1,7 +1,6 @@
 import 'package:city_of_carnation/managers/firestore_manager.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 Text(
                   "Register",
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         color: Colors.white,
                       ),
                 ),
@@ -125,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Text(
                         'Error Message',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: Colors.white,
                             ),
                       ),
