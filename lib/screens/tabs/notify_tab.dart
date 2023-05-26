@@ -9,9 +9,11 @@ class NotifyTab extends StatelessWidget {
   const NotifyTab({
     super.key,
     required this.workOrderStream,
+    required this.workOrders,
   });
 
-  final Stream<QuerySnapshot<Map<String, dynamic>>> workOrderStream;
+  final List<WorkOrder> workOrders;
+  final Stream<List<WorkOrder>> workOrderStream;
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +70,8 @@ class NotifyTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-              Text(
-                'Open',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
-              const SizedBox(height: 15),
               StreamBuilder(
+                initialData: workOrders,
                 stream: workOrderStream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -84,27 +80,64 @@ class NotifyTab extends StatelessWidget {
                     );
                   }
 
-                  final List<WorkOrder> workOrders = snapshot.data!.docs
-                      .map((e) => WorkOrder.fromJson(id: e.id, json: e.data()))
+                  final List<WorkOrder> workOrders =
+                      snapshot.data as List<WorkOrder>;
+
+                  final List<WorkOrder> openWorkOrders = workOrders
+                      .where((element) => !element.isCompleted!)
+                      .toList();
+                  final List<WorkOrder> closedWorkOrders = workOrders
+                      .where((element) => element.isCompleted!)
                       .toList();
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      for (final workOrder in workOrders
-                          .where((element) => element.isCompleted == false))
-                        WorkOrderCard(workOrder: workOrder),
-                      const SizedBox(height: 15),
                       Text(
-                        'Completed',
+                        'Open',
                         style: Theme.of(context).textTheme.headline6!.copyWith(
                               color: Colors.white,
                             ),
                       ),
                       const SizedBox(height: 15),
-                      for (final workOrder in workOrders
-                          .where((element) => element.isCompleted == true))
-                        WorkOrderCard(workOrder: workOrder),
+                      if (openWorkOrders.isEmpty)
+                        const Center(
+                          child: Text(
+                            'No open work orders',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      else
+                        ...openWorkOrders.map(
+                          (e) => WorkOrderCard(
+                            workOrder: e,
+                          ),
+                        ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Closed',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      const SizedBox(height: 15),
+                      if (closedWorkOrders.isEmpty)
+                        const Center(
+                          child: Text(
+                            'No closed work orders',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      else
+                        ...closedWorkOrders.map(
+                          (e) => WorkOrderCard(
+                            workOrder: e,
+                          ),
+                        ),
                     ],
                   );
                 },

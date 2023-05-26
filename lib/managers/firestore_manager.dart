@@ -46,6 +46,13 @@ class FireStoreManager {
     return UserData.fromJson(user.data()!);
   }
 
+  static Stream<UserData> getUserDataStream(String uid) {
+    return userInfoRef
+        .doc(uid)
+        .snapshots()
+        .map((event) => UserData.fromJson(event.data()!));
+  }
+
   static Future<List<Post>> getPostData() async {
     final QuerySnapshot<Map<String, dynamic>> posts =
         await FirestoreCache.getDocuments(
@@ -86,9 +93,29 @@ class FireStoreManager {
     return workOrdersRef.doc().set(workOrder.toJson());
   }
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getWorkOrderStream(
-      String uid) {
-    return workOrdersRef.where("creatorId", isEqualTo: uid).snapshots();
+  static Future<List<WorkOrder>> getWorkOrders(String uid) async {
+    final QuerySnapshot<Map<String, dynamic>> workOrders =
+        await workOrdersRef.where("creatorId", isEqualTo: uid).get();
+
+    return workOrders.docs
+        .map(
+          (e) => WorkOrder.fromJson(
+            id: e.id,
+            json: e.data(),
+          ),
+        )
+        .toList();
+  }
+
+  static Stream<List<WorkOrder>> getWorkOrderStream(String uid) {
+    return workOrdersRef.where("creatorId", isEqualTo: uid).snapshots().map(
+          (event) => event.docs
+              .map((e) => WorkOrder.fromJson(
+                    id: e.id,
+                    json: e.data(),
+                  ))
+              .toList(),
+        );
   }
 
   static Future<void> deleteWorkOrder(String workOrderId) {

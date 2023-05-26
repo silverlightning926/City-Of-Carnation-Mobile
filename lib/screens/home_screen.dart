@@ -15,15 +15,19 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
     required this.userData,
+    required this.userDataStream,
     required this.posts,
     required this.events,
     required this.workOrders,
+    required this.workOrderStream,
   });
 
   final UserData userData;
+  final Stream<UserData> userDataStream;
   final List<Post> posts;
   final List<Event> events;
-  final Stream<QuerySnapshot<Map<String, dynamic>>> workOrders;
+  final List<WorkOrder> workOrders;
+  final Stream<List<WorkOrder>> workOrderStream;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -34,8 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final Post _featuredPost;
   late final List<Event> _upcomingEvents;
-
-  late final List<Widget> _widgetOptions;
 
   @override
   void initState() {
@@ -58,88 +60,94 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
         )
         .toList();
-
-    _widgetOptions = <Widget>[
-      HomeTab(
-        name: widget.userData.name!.split(' ')[0],
-        featuredPost: _featuredPost,
-        upcomingEvents: _upcomingEvents,
-      ),
-      NotifyTab(
-        workOrderStream: widget.workOrders,
-      ),
-      FeedTab(
-        posts: widget.posts,
-      ),
-      EventsTab(
-        events: widget.events,
-      ),
-    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            title: const Text(
-              "City of Carnation",
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  try {
-                    FirebaseAuth.instance.signOut().then(
-                      (value) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const WelcomeScreen(),
-                            settings:
-                                const RouteSettings(name: 'WelcomeScreen'),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                    );
-                  } on FirebaseAuthException catch (exception) {
-                    print(exception);
-                  }
-                },
-                icon: const Icon(
-                  Icons.logout,
-                  size: 30,
+    return StreamBuilder(
+      stream: widget.userDataStream,
+      initialData: widget.userData,
+      builder: (context, snapshot) => WillPopScope(
+        onWillPop: () async => false,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              title: const Text(
+                "City of Carnation",
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    try {
+                      FirebaseAuth.instance.signOut().then(
+                        (value) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const WelcomeScreen(),
+                              settings:
+                                  const RouteSettings(name: 'WelcomeScreen'),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                      );
+                    } on FirebaseAuthException catch (exception) {
+                      print(exception);
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.logout,
+                    size: 30,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          body: _widgetOptions.elementAt(_selectedIndex),
-          bottomNavigationBar: BottomNavigationBar(
-            onTap: (value) => setState(() => _selectedIndex = value),
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.teal[200]!,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.construction),
-                label: 'Notify',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.newspaper),
-                label: 'Feed',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month),
-                label: 'Events',
-              ),
-            ],
+              ],
+            ),
+            body: IndexedStack(
+              index: _selectedIndex,
+              children: [
+                HomeTab(
+                  name: snapshot.data!.name?.split(' ')[0] ?? '',
+                  featuredPost: _featuredPost,
+                  upcomingEvents: _upcomingEvents,
+                ),
+                NotifyTab(
+                  workOrders: widget.workOrders,
+                  workOrderStream: widget.workOrderStream,
+                ),
+                FeedTab(
+                  posts: widget.posts,
+                ),
+                EventsTab(
+                  events: widget.events,
+                ),
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              onTap: (value) => setState(() => _selectedIndex = value),
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.teal[200]!,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.construction),
+                  label: 'Notify',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.newspaper),
+                  label: 'Feed',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.calendar_month),
+                  label: 'Events',
+                ),
+              ],
+            ),
           ),
         ),
       ),

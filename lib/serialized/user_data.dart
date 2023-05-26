@@ -1,9 +1,11 @@
 class UserData {
+  String? uid;
   String? name;
   String? email;
   String? phone;
 
   UserData({
+    this.uid,
     this.name,
     this.email,
     this.phone,
@@ -17,6 +19,7 @@ class UserData {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+
     data['name'] = name;
     data['email'] = email;
     data['phone'] = phone;

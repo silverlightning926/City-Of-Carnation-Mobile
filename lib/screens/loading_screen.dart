@@ -3,6 +3,7 @@ import 'package:city_of_carnation/screens/home_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
+import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,11 +22,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
 
-    FirebaseAnalytics.instance.setUserId(
-      id: FirebaseAuth.instance.currentUser!.uid,
-    );
+    Stream<UserData> userDataStream = FireStoreManager.getUserDataStream(
+        FirebaseAuth.instance.currentUser!.uid);
 
-    Stream<QuerySnapshot<Map<String, dynamic>>> workOrderStream =
+    Stream<List<WorkOrder>> workOrderStream =
         FireStoreManager.getWorkOrderStream(
             FirebaseAuth.instance.currentUser!.uid);
 
@@ -34,24 +34,32 @@ class _LoadingScreenState extends State<LoadingScreen> {
         FireStoreManager.getUserData(FirebaseAuth.instance.currentUser!.uid),
         FireStoreManager.getPostData(),
         FireStoreManager.getEventData(),
+        FireStoreManager.getWorkOrders(FirebaseAuth.instance.currentUser!.uid),
       ],
     ).then(
       (value) {
         final UserData userData = value[0] as UserData;
         final List<Post> posts = value[1] as List<Post>;
         final List<Event> events = value[2] as List<Event>;
+        final List<WorkOrder> workOrders = value[3] as List<WorkOrder>;
 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => HomeScreen(
               userData: userData,
+              userDataStream: userDataStream,
               posts: posts,
               events: events,
-              workOrders: workOrderStream,
+              workOrders: workOrders,
+              workOrderStream: workOrderStream,
             ),
             settings: const RouteSettings(name: 'HomeScreen'),
           ),
+        );
+
+        FirebaseAnalytics.instance.setUserId(
+          id: FirebaseAuth.instance.currentUser!.uid,
         );
       },
     );
