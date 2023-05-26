@@ -26,17 +26,9 @@ final eventInfoCacheRef =
 class FireStoreManager {
   static Future<void> addUserData(
     String uid,
-    String name,
-    String email,
-    String phone,
+    UserData userData,
   ) {
-    final user = <String, dynamic>{
-      "name": name,
-      "email": email,
-      "phone": phone,
-    };
-
-    return userInfoRef.doc(uid).set(user);
+    return userInfoRef.doc(uid).set(userData.toJson());
   }
 
   static Future<UserData> getUserData(String uid) async {
@@ -51,6 +43,13 @@ class FireStoreManager {
         .doc(uid)
         .snapshots()
         .map((event) => UserData.fromJson(event.data()!));
+  }
+
+  static Future<void> updateUserData(
+    String uid,
+    UserData userData,
+  ) {
+    return userInfoRef.doc(uid).update(userData.toJson());
   }
 
   static Future<List<Post>> getPostData() async {
