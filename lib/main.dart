@@ -30,6 +30,7 @@ class CityOfCarnation extends StatelessWidget {
           color: Colors.black,
           titleTextStyle: Theme.of(context).textTheme.headline4!.copyWith(
                 color: Colors.white,
+                fontSize: 28,
               ),
         ),
       ),
