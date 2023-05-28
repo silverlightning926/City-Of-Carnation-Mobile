@@ -91,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   icon: const Icon(
                     Icons.settings,
-                    size: 30,
                   ),
                 ),
               ],
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               index: _selectedIndex,
               children: [
                 HomeTab(
-                  name: snapshot.data!.name?.split(' ')[0] ?? '',
+                  name: snapshot.data?.name?.split(' ')[0] ?? '',
                   featuredPost: _featuredPost,
                   upcomingEvents: _upcomingEvents,
                 ),
@@ -119,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
             bottomNavigationBar: BottomNavigationBar(
               onTap: (value) => setState(() => _selectedIndex = value),
               currentIndex: _selectedIndex,
-              selectedItemColor: Colors.teal[200]!,
+              type: BottomNavigationBarType.fixed,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),

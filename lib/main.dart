@@ -33,6 +33,11 @@ class CityOfCarnation extends StatelessWidget {
                 fontSize: 28,
               ),
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.teal[200],
+          unselectedItemColor: Colors.grey,
+        ),
       ),
       navigatorObservers: [
         FirebaseAnalyticsObserver(
