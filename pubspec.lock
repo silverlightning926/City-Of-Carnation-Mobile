@@ -917,6 +917,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+  validation_pro:
+    dependency: "direct main"
+    description:
+      name: validation_pro
+      sha256: d5c69ecb80879a473ec2cc74ac56d2db4e10567a21077596d85ed7cb1cbef810
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   vector_math:
     dependency: transitive
     description:
@@ -958,5 +966,5 @@ packages:
     source: hosted
     version: "6.3.0"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
+  dart: ">=3.0.0 <3.7.7"
   flutter: ">=3.3.0"

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:validation_pro/validate.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  bool isErrored = false;
 
   @override
   void dispose() {
@@ -40,11 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   './assets/images/login_screen_image.svg',
                   width: 200,
                 ),
-                Text(
-                  "Login",
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: Colors.white,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: Text(
+                    "Login",
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
                 ),
                 Column(
                   children: [
@@ -71,24 +77,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 Visibility(
-                  visible: false,
+                  visible: isErrored,
                   maintainState: true,
                   maintainSize: true,
                   maintainAnimation: true,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromARGB(70, 244, 67, 54),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
                     ),
-                    padding: const EdgeInsets.all(10.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Error Message',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                            ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(70, 244, 67, 54),
+                      ),
+                      padding: const EdgeInsets.all(10.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Something went wrong. Please try again.',
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
                       ),
                     ),
                   ),
@@ -99,35 +111,43 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       onPressed: () {
                         context.loaderOverlay.show();
-                        try {
+                        if (_emailController.text.isEmpty ||
+                            _passwordController.text.isEmpty ||
+                            !Validate.isEmail(_emailController.text)) {
+                          setState(() {
+                            isErrored = true;
+                          });
+                          context.loaderOverlay.hide();
+                          return;
+                        } else {
+                          setState(() {
+                            isErrored = false;
+                          });
+
                           FirebaseAuth.instance
                               .signInWithEmailAndPassword(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              )
-                              .then((value) => {
-                                    context.loaderOverlay.hide(),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoadingScreen(),
-                                        settings: const RouteSettings(
-                                          name: 'LoadingScreen',
-                                        ),
-                                      ),
-                                    ),
-                                    FirebaseAnalytics.instance
-                                        .logLogin(loginMethod: 'email'),
-                                  });
-                        } on FirebaseAuthException catch (exception) {
-                          context.loaderOverlay.hide();
-                          // TODO: Handle FirebaseAuthException With Error Message
-                          if (exception.code == 'user-not-found') {
-                            print('No user found for that email.');
-                          } else if (exception.code == 'wrong-password') {
-                            print('Wrong password provided for that user.');
-                          }
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          )
+                              .then((value) {
+                            context.loaderOverlay.hide();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoadingScreen(),
+                                settings: const RouteSettings(
+                                  name: 'LoadingScreen',
+                                ),
+                              ),
+                            );
+                            FirebaseAnalytics.instance
+                                .logLogin(loginMethod: 'email');
+                          }).catchError((error) {
+                            setState(() {
+                              isErrored = true;
+                            });
+                            context.loaderOverlay.hide();
+                          });
                         }
                       },
                       style: ElevatedButton.styleFrom(
