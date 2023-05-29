@@ -19,6 +19,7 @@ class WorkOrderCard extends StatelessWidget {
       child: Material(
         borderRadius: BorderRadius.circular(10),
         child: Ink(
+          padding: const EdgeInsets.all(10.0),
           width: double.infinity,
           height: 100,
           decoration: BoxDecoration(
@@ -61,33 +62,28 @@ class WorkOrderCard extends StatelessWidget {
                 },
               );
             },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      workOrder.title!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      workOrder.status!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                  ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  workOrder.title!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Colors.white,
+                      ),
                 ),
-              ),
+                const SizedBox(height: 5),
+                Text(
+                  workOrder.status!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+              ],
             ),
           ),
         ),
