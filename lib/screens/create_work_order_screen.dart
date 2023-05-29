@@ -209,9 +209,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                 ElevatedButton(
                   onPressed: () {
                     context.loaderOverlay.show();
-                    if (_pickedImage != null) {
-                      createWorkOrder();
-                    }
+                    createWorkOrder();
                   },
                   child: const Text('Submit'),
                 ),
@@ -224,17 +222,24 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
   }
 
   Future<void> createWorkOrder() async {
-    final UploadTask uploadTask = FirebaseStorage.instance
-        .ref()
-        .child(
-          'user-storage/${FirebaseAuth.instance.currentUser!.uid}/work-orders/images/${DateTime.now().millisecondsSinceEpoch}-${randomAlphaNumeric(5)}-${sanitizeFilename(_pickedImage!.name)}',
-        )
-        .putFile(
-          File(_pickedImage!.path),
-        );
+    bool hasImage = _pickedImage != null;
+    late final String downloadURL;
 
-    final TaskSnapshot uploadedFile = (await uploadTask);
-    final String downloadURL = await uploadedFile.ref.getDownloadURL();
+    if (hasImage) {
+      final UploadTask uploadTask = FirebaseStorage.instance
+          .ref()
+          .child(
+            'user-storage/${FirebaseAuth.instance.currentUser!.uid}/work-orders/images/${DateTime.now().millisecondsSinceEpoch}-${randomAlphaNumeric(5)}-${sanitizeFilename(_pickedImage!.name)}',
+          )
+          .putFile(
+            File(_pickedImage!.path),
+          );
+
+      final TaskSnapshot uploadedFile = (await uploadTask);
+      downloadURL = await uploadedFile.ref.getDownloadURL();
+    } else {
+      downloadURL = '';
+    }
 
     WorkOrder workOrder = WorkOrder(
       title: _titleController.text,

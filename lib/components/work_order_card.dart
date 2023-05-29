@@ -35,6 +35,9 @@ class WorkOrderCard extends StatelessWidget {
                     ),
                   )
                 : null,
+            color: workOrder.image!.isEmpty
+                ? Colors.white.withOpacity(0.175)
+                : null,
           ),
           child: InkWell(
             onTap: () {
