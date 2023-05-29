@@ -1,4 +1,4 @@
-import 'package:city_of_carnation/managers/firestore_manager.dart';
+import 'package:city_of_carnation/managers/firestore_services.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -267,7 +267,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               uid: value.user!.uid,
                             );
 
-                            FireStoreManager.addUserData(
+                            FireStoreServices.addUserData(
                               value.user!.uid,
                               user,
                             ).then(

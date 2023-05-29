@@ -23,7 +23,7 @@ final postFeedCacheRef =
 final eventInfoCacheRef =
     FirebaseFirestore.instance.collection('status').doc('event-info');
 
-class FireStoreManager {
+class FireStoreServices {
   static Future<void> addUserData(
     String uid,
     UserData userData,

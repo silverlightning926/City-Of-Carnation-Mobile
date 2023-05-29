@@ -1,4 +1,4 @@
-import 'package:city_of_carnation/managers/firestore_manager.dart';
+import 'package:city_of_carnation/managers/firestore_services.dart';
 import 'package:city_of_carnation/screens/settings_screen.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -73,7 +73,7 @@ class _UpdateUserInfoScreenState extends State<UpdateUserInfoScreen> {
                               : newUserData.phone =
                                   _userInfoUpdateController.text;
 
-                      FireStoreManager.updateUserData(
+                      FireStoreServices.updateUserData(
                               FirebaseAuth.instance.currentUser!.uid,
                               newUserData)
                           .then(

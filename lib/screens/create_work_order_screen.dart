@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:city_of_carnation/managers/firestore_manager.dart';
+import 'package:city_of_carnation/managers/firestore_services.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -277,7 +277,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       creatorId: FirebaseAuth.instance.currentUser!.uid,
     );
 
-    FireStoreManager.createWorkOrder(
+    FireStoreServices.createWorkOrder(
       FirebaseAuth.instance.currentUser!.uid,
       workOrder,
     ).then((value) {

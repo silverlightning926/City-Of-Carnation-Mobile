@@ -1,4 +1,4 @@
-import 'package:city_of_carnation/managers/firestore_manager.dart';
+import 'package:city_of_carnation/managers/firestore_services.dart';
 import 'package:city_of_carnation/screens/home_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
@@ -21,19 +21,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
 
-    Stream<UserData> userDataStream = FireStoreManager.getUserDataStream(
+    Stream<UserData> userDataStream = FireStoreServices.getUserDataStream(
         FirebaseAuth.instance.currentUser!.uid);
 
     Stream<List<WorkOrder>> workOrderStream =
-        FireStoreManager.getWorkOrderStream(
+        FireStoreServices.getWorkOrderStream(
             FirebaseAuth.instance.currentUser!.uid);
 
     Future.wait(
       [
-        FireStoreManager.getUserData(FirebaseAuth.instance.currentUser!.uid),
-        FireStoreManager.getPostData(),
-        FireStoreManager.getEventData(),
-        FireStoreManager.getWorkOrders(FirebaseAuth.instance.currentUser!.uid),
+        FireStoreServices.getUserData(FirebaseAuth.instance.currentUser!.uid),
+        FireStoreServices.getPostData(),
+        FireStoreServices.getEventData(),
+        FireStoreServices.getWorkOrders(FirebaseAuth.instance.currentUser!.uid),
       ],
     ).then(
       (value) {

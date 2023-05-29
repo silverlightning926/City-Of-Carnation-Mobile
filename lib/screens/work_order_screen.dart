@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:city_of_carnation/managers/firestore_manager.dart';
+import 'package:city_of_carnation/managers/firestore_services.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class WorkOrderScreen extends StatelessWidget {
                     onPressed: () {
                       context.loaderOverlay.show();
 
-                      FireStoreManager.deleteWorkOrder(workOrder.id!).then(
+                      FireStoreServices.deleteWorkOrder(workOrder.id!).then(
                         (value) {
                           Navigator.pop(context);
 

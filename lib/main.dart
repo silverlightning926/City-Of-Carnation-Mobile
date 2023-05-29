@@ -27,14 +27,14 @@ class CityOfCarnation extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
-          color: Colors.black,
+          color: Colors.transparent,
           titleTextStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
                 color: Colors.white,
                 fontSize: 28,
               ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
           selectedItemColor: Colors.teal[200],
           unselectedItemColor: Colors.grey,
         ),
