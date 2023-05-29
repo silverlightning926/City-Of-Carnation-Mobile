@@ -209,7 +209,31 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
                 ElevatedButton(
                   onPressed: () {
                     context.loaderOverlay.show();
-                    createWorkOrder();
+                    createWorkOrder().then(
+                      (value) {
+                        context.loaderOverlay.hide();
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Work order created successfully.',
+                            ),
+                          ),
+                        );
+                      },
+                    ).catchError(
+                      (error) {
+                        context.loaderOverlay.hide();
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Something went wrong. Please try again.',
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
                   child: const Text('Submit'),
                 ),
@@ -257,7 +281,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       FirebaseAuth.instance.currentUser!.uid,
       workOrder,
     ).then((value) {
-      context.loaderOverlay.hide();
       Navigator.of(context).pop();
       FirebaseAnalytics.instance.logEvent(
         name: 'create_work_order',

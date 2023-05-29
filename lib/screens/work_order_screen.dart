@@ -155,11 +155,12 @@ class WorkOrderScreen extends StatelessWidget {
                                     ),
                           ),
                           const SizedBox(height: 15),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child:
-                                CachedNetworkImage(imageUrl: workOrder.image!),
-                          ),
+                          (workOrder.image != null && workOrder.image != '')
+                              ? ClipRRect(
+                                  child: CachedNetworkImage(
+                                      imageUrl: workOrder.image!),
+                                )
+                              : const SizedBox(),
                         ],
                       ),
                     );
