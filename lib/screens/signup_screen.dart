@@ -4,6 +4,8 @@ import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:validation_pro/validate.dart';
 
@@ -61,6 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     TextField(
                       controller: _nameController,
+                      textCapitalization: TextCapitalization.words,
                       decoration: const InputDecoration(
                         labelText: 'Name',
                         border: OutlineInputBorder(),
@@ -71,6 +74,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     TextField(
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                      ],
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
@@ -79,12 +86,28 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(
                       height: 25,
                     ),
-                    TextField(
-                      controller: _phoneController,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Phone',
+                    InternationalPhoneNumberInput(
+                      ignoreBlank: true,
+                      onInputChanged: (PhoneNumber number) {},
+                      textFieldController: _phoneController,
+                      selectorConfig: const SelectorConfig(
+                        selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                        trailingSpace: false,
+                      ),
+                      formatInput: false,
+                      autoValidateMode: AutovalidateMode.disabled,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        signed: false,
+                        decimal: false,
+                      ),
+                      inputDecoration: const InputDecoration(
+                        labelText: 'Phone Number',
                         border: OutlineInputBorder(),
+                      ),
+                      maxLength: 10,
+                      initialValue: PhoneNumber(
+                        isoCode: 'US',
+                        dialCode: '+1',
                       ),
                     ),
                     const SizedBox(
@@ -159,22 +182,28 @@ class _SignupScreenState extends State<SignupScreen> {
                           });
 
                           context.loaderOverlay.hide();
-                        } else if (!Validate.isEmail(_emailController.text)) {
+                        } else if (!Validate.isEmail(
+                          _emailController.text.trim(),
+                        )) {
                           setState(() {
                             isErrored = true;
                             errorMessage = 'Please enter a valid email.';
                           });
 
                           context.loaderOverlay.hide();
-                        } else if (!Validate.isMobile(_phoneController.text)) {
+                        } else if (!RegExp(
+                          r'^[0-9]{10}$',
+                        ).hasMatch(
+                          _phoneController.text.trim(),
+                        )) {
                           setState(() {
                             isErrored = true;
                             errorMessage = 'Please enter a valid phone number.';
                           });
 
                           context.loaderOverlay.hide();
-                        } else if (_passwordController.text !=
-                            _confirmPasswordController.text) {
+                        } else if (_passwordController.text.trim() !=
+                            _confirmPasswordController.text.trim()) {
                           setState(() {
                             isErrored = true;
                             errorMessage = 'Passwords do not match.';
@@ -182,7 +211,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
                           context.loaderOverlay.hide();
                         } else if (!Validate.isPassword(
-                            _passwordController.text)) {
+                          _passwordController.text.trim(),
+                        )) {
                           setState(() {
                             isErrored = true;
                             errorMessage =
@@ -231,9 +261,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           )
                               .then((value) {
                             UserData user = UserData(
-                              name: _nameController.text,
-                              email: _emailController.text,
-                              phone: _phoneController.text,
+                              name: _nameController.text.trim(),
+                              email: _emailController.text.trim(),
+                              phone: _phoneController.text.trim(),
                               uid: value.user!.uid,
                             );
 
