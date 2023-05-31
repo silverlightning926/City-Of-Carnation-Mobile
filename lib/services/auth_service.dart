@@ -44,8 +44,8 @@ class AuthService {
     await _auth.currentUser!
         .reauthenticateWithCredential(
       EmailAuthProvider.credential(
-        email: email,
-        password: password,
+        email: email.trim(),
+        password: password.trim(),
       ),
     )
         .catchError((error) {
@@ -55,14 +55,14 @@ class AuthService {
 
   // Send password reset email
   static Future<void> sendPasswordResetEmail({required String email}) async {
-    await _auth.sendPasswordResetEmail(email: email);
+    await _auth.sendPasswordResetEmail(email: email.trim());
   }
 
   // Update user email
   static Future<void> updateUserEmail({required String email}) async {
     await _auth.currentUser!
         .updateEmail(
-      email,
+      email.trim(),
     )
         .catchError((error) {
       throw error;
@@ -73,7 +73,7 @@ class AuthService {
   static Future<void> updateUserPassword({required String password}) async {
     await _auth.currentUser!
         .updatePassword(
-      password,
+      password.trim(),
     )
         .catchError((error) {
       throw error;
