@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/news_screen.dart';
 import 'package:city_of_carnation/serialized/post.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 
 class NewsCard extends StatelessWidget {
@@ -49,12 +49,9 @@ class NewsCard extends StatelessWidget {
                 ),
               );
 
-              FirebaseAnalytics.instance.logEvent(
-                name: 'news_card_tapped',
-                parameters: <String, dynamic>{
-                  'id': post.id!,
-                  'title': post.title!,
-                },
+              AnalyticsService.newsCardClick(
+                id: post.id ?? 'No ID',
+                title: post.title ?? 'No title',
               );
             },
             child: Padding(

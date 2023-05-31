@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/event_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -46,12 +46,9 @@ class MiniEventCard extends StatelessWidget {
                 ),
               );
 
-              FirebaseAnalytics.instance.logEvent(
-                name: 'event_card_tapped',
-                parameters: <String, dynamic>{
-                  'id': event.id,
-                  'title': event.title,
-                },
+              AnalyticsService.logEventCardClick(
+                id: event.id ?? 'No ID',
+                title: event.title ?? 'No Title',
               );
             },
             customBorder: RoundedRectangleBorder(

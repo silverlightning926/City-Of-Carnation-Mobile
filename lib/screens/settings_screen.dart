@@ -1,14 +1,8 @@
 import 'dart:io';
 
-import 'package:city_of_carnation/screens/update_user_info_screen.dart';
-import 'package:city_of_carnation/screens/welcome_screen.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
-
-enum UpdateType { name, email, phone }
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen(
@@ -37,106 +31,6 @@ class SettingsScreen extends StatelessWidget {
                 ? DevicePlatform.android
                 : DevicePlatform.iOS,
             sections: [
-              SettingsSection(
-                title: const Text('Account'),
-                tiles: [
-                  SettingsTile.navigation(
-                    leading: const Icon(
-                      Icons.person,
-                    ),
-                    trailing: const Icon(
-                      Icons.edit,
-                      size: 15,
-                    ),
-                    title: const Text('Name'),
-                    value: Text(userData.name!),
-                    onPressed: (context) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateUserInfoScreen(
-                            userData: snapshot.data!,
-                            updateType: UpdateType.name,
-                          ),
-                          settings:
-                              const RouteSettings(name: 'UpdateNameScreen'),
-                        ),
-                      );
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(
-                      Icons.email,
-                    ),
-                    trailing: const Icon(
-                      Icons.edit,
-                      size: 15,
-                    ),
-                    title: const Text('Email'),
-                    value: Text(userData.email!),
-                    onPressed: (context) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateUserInfoScreen(
-                            userData: snapshot.data!,
-                            updateType: UpdateType.email,
-                          ),
-                          settings:
-                              const RouteSettings(name: 'UpdateEmailScreen'),
-                        ),
-                      );
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(
-                      Icons.phone,
-                    ),
-                    trailing: const Icon(
-                      Icons.edit,
-                      size: 15,
-                    ),
-                    title: const Text('Phone'),
-                    value: Text(userData.phone!),
-                    onPressed: (context) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateUserInfoScreen(
-                            userData: snapshot.data!,
-                            updateType: UpdateType.phone,
-                          ),
-                          settings:
-                              const RouteSettings(name: 'UpdatePhoneScreen'),
-                        ),
-                      );
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(
-                      Icons.logout,
-                    ),
-                    title: const Text('Sign Out'),
-                    onPressed: (context) {
-                      FirebaseAuth.instance.signOut().then(
-                        (value) {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const WelcomeScreen(),
-                                settings: const RouteSettings(
-                                  name: 'WelcomeScreen',
-                                ),
-                              ),
-                              (route) => false);
-
-                          FirebaseAnalytics.instance.logEvent(name: 'sign_out');
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
               SettingsSection(
                 title: const Text('About'),
                 tiles: [

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/screens/work_order_screen.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 
 class WorkOrderCard extends StatelessWidget {
@@ -24,7 +24,7 @@ class WorkOrderCard extends StatelessWidget {
           height: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            image: workOrder.image!.isNotEmpty
+            image: workOrder.image != null && workOrder.image!.isNotEmpty
                 ? DecorationImage(
                     image: CachedNetworkImageProvider(
                       workOrder.image!,
@@ -54,12 +54,9 @@ class WorkOrderCard extends StatelessWidget {
                 ),
               );
 
-              FirebaseAnalytics.instance.logEvent(
-                name: 'work_order_card_tapped',
-                parameters: {
-                  'work_order_id': workOrder.id,
-                  'work_order_title': workOrder.title,
-                },
+              AnalyticsService.workOrderCardClicked(
+                id: workOrder.id ?? 'No ID',
+                title: workOrder.title ?? 'No Title',
               );
             },
             child: Column(
