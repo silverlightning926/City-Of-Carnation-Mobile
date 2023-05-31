@@ -3,6 +3,7 @@ import 'package:city_of_carnation/services/auth_service.dart';
 import 'package:city_of_carnation/services/firestore_service.dart';
 import 'package:city_of_carnation/services/validation_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class UpdateEmailScreen extends StatefulWidget {
@@ -56,6 +57,9 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
                 const SizedBox(height: 15),
                 TextField(
                   controller: _emailController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                  ],
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(),
@@ -101,7 +105,7 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
                           );
 
                           await AuthService.updateUserEmail(
-                            email: _emailController.text.trim(),
+                            email: _emailController.text,
                           );
 
                           UserData newUserData = widget.userData;
