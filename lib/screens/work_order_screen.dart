@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:city_of_carnation/managers/firestore_services.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
+import 'package:city_of_carnation/services/firestore_service.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -48,17 +48,16 @@ class WorkOrderScreen extends StatelessWidget {
                     onPressed: () {
                       context.loaderOverlay.show();
 
-                      FireStoreServices.deleteWorkOrder(workOrder.id!).then(
+                      FirestoreService.deleteWorkOrder(workOrder.id!).then(
                         (value) {
                           Navigator.pop(context);
 
-                          FirebaseAnalytics.instance.logEvent(
-                            name: 'work_order_deleted',
-                            parameters: {
-                              'work_order_id': workOrder.id,
-                              'work_order_title': workOrder.title,
-                            },
-                          );
+                          AnalyticsService.logEvent(
+                              name: 'work_order_deleted',
+                              parameters: {
+                                'work_order_id': workOrder.id,
+                                'work_order_title': workOrder.title,
+                              });
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

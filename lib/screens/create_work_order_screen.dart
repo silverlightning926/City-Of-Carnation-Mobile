@@ -1,17 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
-import 'package:city_of_carnation/managers/firestore_services.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
+import 'package:city_of_carnation/services/auth_service.dart';
+import 'package:city_of_carnation/services/cloud_storage_service.dart';
+import 'package:city_of_carnation/services/firestore_service.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:sanitize_filename/sanitize_filename.dart';
 
 class CreateWorkOrderScreen extends StatefulWidget {
   const CreateWorkOrderScreen({super.key});
@@ -247,22 +244,15 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
 
   Future<void> createWorkOrder() async {
     bool hasImage = _pickedImage != null;
-    late final String downloadURL;
+    late final String? downloadURL;
 
     if (hasImage) {
-      final UploadTask uploadTask = FirebaseStorage.instance
-          .ref()
-          .child(
-            'user-storage/${FirebaseAuth.instance.currentUser!.uid}/work-orders/images/${DateTime.now().millisecondsSinceEpoch}-${randomAlphaNumeric(5)}-${sanitizeFilename(_pickedImage!.name)}',
-          )
-          .putFile(
-            File(_pickedImage!.path),
-          );
-
-      final TaskSnapshot uploadedFile = (await uploadTask);
-      downloadURL = await uploadedFile.ref.getDownloadURL();
+      downloadURL = await CloudStorageService.uploadWorkOrderPhoto(
+        imageFile: File(_pickedImage!.path),
+        name: _pickedImage!.name,
+      );
     } else {
-      downloadURL = '';
+      downloadURL = null;
     }
 
     WorkOrder workOrder = WorkOrder(
@@ -274,19 +264,16 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       status: 'Pending',
       timestamp: Timestamp.now(),
       isCompleted: false,
-      creatorId: FirebaseAuth.instance.currentUser!.uid,
+      creatorId: AuthService.userId,
     );
 
-    FireStoreServices.createWorkOrder(
-      FirebaseAuth.instance.currentUser!.uid,
+    FirestoreService.createWorkOrder(
+      AuthService.userId!,
       workOrder,
     ).then((value) {
       Navigator.of(context).pop();
-      FirebaseAnalytics.instance.logEvent(
-        name: 'create_work_order',
-        parameters: <String, dynamic>{
-          'title': _titleController.text,
-        },
+      AnalyticsService.workOrderCreated(
+        title: workOrder.title ?? 'No title',
       );
     });
   }
@@ -301,11 +288,5 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       );
     }
     return null;
-  }
-
-  randomAlphaNumeric(int i) {
-    var random = Random.secure();
-    var values = List<int>.generate(i, (i) => random.nextInt(256));
-    return base64Url.encode(values);
   }
 }

@@ -1,11 +1,11 @@
-import 'package:city_of_carnation/managers/firestore_services.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
+import 'package:city_of_carnation/services/auth_service.dart';
+import 'package:city_of_carnation/services/firestore_service.dart';
 import 'package:city_of_carnation/screens/home_screen.dart';
 import 'package:city_of_carnation/serialized/event.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -21,19 +21,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
 
-    Stream<UserData> userDataStream = FireStoreServices.getUserDataStream(
-        FirebaseAuth.instance.currentUser!.uid);
+    Stream<UserData> userDataStream =
+        FirestoreService.getUserDataStream(AuthService.userId!);
 
     Stream<List<WorkOrder>> workOrderStream =
-        FireStoreServices.getWorkOrderStream(
-            FirebaseAuth.instance.currentUser!.uid);
+        FirestoreService.getWorkOrderStream();
 
     Future.wait(
       [
-        FireStoreServices.getUserData(FirebaseAuth.instance.currentUser!.uid),
-        FireStoreServices.getPostData(),
-        FireStoreServices.getEventData(),
-        FireStoreServices.getWorkOrders(FirebaseAuth.instance.currentUser!.uid),
+        FirestoreService.getUserData(AuthService.userId!),
+        FirestoreService.getPostData(),
+        FirestoreService.getEventData(),
+        FirestoreService.getWorkOrders(),
       ],
     ).then(
       (value) {
@@ -57,8 +56,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
           ),
         );
 
-        FirebaseAnalytics.instance.setUserId(
-          id: FirebaseAuth.instance.currentUser!.uid,
+        AnalyticsService.setUserId();
+
+        AnalyticsService.setUserProperties(name: 'name', value: userData.name!);
+        AnalyticsService.setUserProperties(
+            name: 'email', value: userData.email!);
+        AnalyticsService.setUserProperties(
+            name: 'phone', value: userData.phone!);
+
+        AnalyticsService.logLogin();
+
+        AnalyticsService.logEvent(
+          name: 'app_open',
+          parameters: <String, dynamic>{
+            'user_id': AuthService.userId,
+          },
         );
       },
     );

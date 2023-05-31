@@ -1,4 +1,5 @@
-import 'package:city_of_carnation/screens/settings_screen.dart';
+import 'package:city_of_carnation/components/avatar/profile_picture.dart';
+import 'package:city_of_carnation/screens/profile_screen.dart';
 import 'package:city_of_carnation/screens/tabs/events_tab.dart';
 import 'package:city_of_carnation/screens/tabs/feed_tab.dart';
 import 'package:city_of_carnation/screens/tabs/home_tab.dart';
@@ -70,50 +71,68 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: Scaffold(
             appBar: AppBar(
-              elevation: 0,
               automaticallyImplyLeading: false,
-              title: const Text(
-                "City of Carnation",
+              title: Text(
+                [
+                  'Welcome ${snapshot.data?.name?.split(' ')[0]}!',
+                  'Notify',
+                  'Feed',
+                  'Events',
+                ][_selectedIndex],
               ),
               actions: [
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsScreen(
-                          userData: snapshot.data!,
-                          userDataStream: widget.userDataStream,
-                        ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Ink(
+                    child: InkWell(
+                      customBorder: const CircleBorder(),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              userData: snapshot.data!,
+                              userDataStream: widget.userDataStream,
+                            ),
+                          ),
+                        );
+                      },
+                      child: ProfilePicture(
+                        radius: 17,
+                        fontsize: 10,
+                        name: snapshot.data!.name ?? '',
+                        img: snapshot.data!.profilePicture,
                       ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.settings,
+                    ),
                   ),
                 ),
               ],
             ),
-            body: IndexedStack(
-              index: _selectedIndex,
-              children: [
-                HomeTab(
-                  name: snapshot.data?.name?.split(' ')[0] ?? '',
-                  featuredPost: _featuredPost,
-                  upcomingEvents: _upcomingEvents,
-                ),
-                NotifyTab(
-                  workOrders: widget.workOrders,
-                  workOrderStream: widget.workOrderStream,
-                ),
-                FeedTab(
-                  posts: widget.posts,
-                ),
-                EventsTab(
-                  events: widget.events,
-                ),
-              ],
+            body: Padding(
+              padding: const EdgeInsets.only(
+                top: 15,
+                right: 15,
+                left: 15,
+              ),
+              child: IndexedStack(
+                index: _selectedIndex,
+                children: [
+                  HomeTab(
+                    featuredPost: _featuredPost,
+                    upcomingEvents: _upcomingEvents,
+                  ),
+                  NotifyTab(
+                    workOrders: widget.workOrders,
+                    workOrderStream: widget.workOrderStream,
+                  ),
+                  FeedTab(
+                    posts: widget.posts,
+                  ),
+                  EventsTab(
+                    events: widget.events,
+                  ),
+                ],
+              ),
             ),
             bottomNavigationBar: BottomNavigationBar(
               onTap: (value) => setState(() => _selectedIndex = value),

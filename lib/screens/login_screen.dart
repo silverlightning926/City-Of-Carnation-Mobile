@@ -1,10 +1,9 @@
 import 'package:city_of_carnation/screens/loading_screen.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:city_of_carnation/services/auth_service.dart';
+import 'package:city_of_carnation/services/validation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:validation_pro/validate.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -56,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextField(
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 25,
                     ),
                     TextField(
+                      keyboardType: TextInputType.visiblePassword,
                       controller: _passwordController,
                       obscureText: true,
                       enableSuggestions: false,
@@ -113,42 +114,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         context.loaderOverlay.show();
                         if (_emailController.text.isEmpty ||
                             _passwordController.text.isEmpty ||
-                            !Validate.isEmail(_emailController.text)) {
+                            ValidationService.validateEmail(
+                                    _emailController.text) !=
+                                EmailValidationResult.valid) {
                           setState(() {
                             isErrored = true;
                           });
                           context.loaderOverlay.hide();
                           return;
-                        } else {
-                          setState(() {
-                            isErrored = false;
-                          });
+                        }
 
-                          FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          )
-                              .then((value) {
-                            context.loaderOverlay.hide();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoadingScreen(),
-                                settings: const RouteSettings(
-                                  name: 'LoadingScreen',
-                                ),
-                              ),
-                            );
-                            FirebaseAnalytics.instance
-                                .logLogin(loginMethod: 'email');
-                          }).catchError((error) {
+                        AuthService.signInWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        )
+                            .then((value) => {
+                                  context.loaderOverlay.hide(),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoadingScreen(),
+                                      settings: const RouteSettings(
+                                        name: 'LoadingScreen',
+                                      ),
+                                    ),
+                                  ),
+                                })
+                            .catchError(
+                          (error) {
                             setState(() {
                               isErrored = true;
                             });
                             context.loaderOverlay.hide();
-                          });
-                        }
+
+                            return error;
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         fixedSize: const Size(100, 75),

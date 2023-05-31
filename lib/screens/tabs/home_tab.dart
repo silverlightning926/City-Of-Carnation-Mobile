@@ -9,96 +9,76 @@ class HomeTab extends StatelessWidget {
     Key? key,
     required this.featuredPost,
     required this.upcomingEvents,
-    required this.name,
   }) : super(key: key);
 
-  final String name;
   final Post featuredPost;
   final List<Event> upcomingEvents;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
-            'Hello $name!',
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: Colors.white,
-                ),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white.withOpacity(0.175),
+          ),
+          child: const Text(
+            'Welcome to the City Of Carnation mobile app! We want to make it easier for you to connect with your city. We hope you enjoy the app and find it useful. If you have any questions or feedback, please email us at cityhall@carnationwa.gov.',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
           ),
         ),
-        const SizedBox(height: 10),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white.withOpacity(0.175),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                'Featured News',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
                 ),
-                child: const Text(
-                  'Welcome to the City Of Carnation mobile app! We want to make it easier for you to connect with your city. We hope you enjoy the app and find it useful. If you have any questions or feedback, please email us at cityhall@carnationwa.gov.',
+              ),
+            ),
+            NewsCard(post: featuredPost),
+          ],
+        ),
+        Visibility(
+          visible: upcomingEvents.isNotEmpty,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Upcoming Events',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text(
-                      'Featured News',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  NewsCard(post: featuredPost),
-                ],
-              ),
-              Visibility(
-                visible: upcomingEvents.isNotEmpty,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        'Upcoming Events',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
+              SizedBox(
+                height: 250,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => MiniEventCard(
+                          event: upcomingEvents[index],
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 250,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => MiniEventCard(
-                                event: upcomingEvents[index],
-                              ),
-                          itemCount: upcomingEvents.length,
-                          scrollDirection: Axis.horizontal),
-                    ),
-                  ],
-                ),
+                    itemCount: upcomingEvents.length,
+                    scrollDirection: Axis.horizontal),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

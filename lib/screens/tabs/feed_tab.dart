@@ -12,26 +12,9 @@ class FeedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
-            'Feed',
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: Colors.white,
-                ),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            itemCount: posts.length,
-            itemBuilder: ((context, index) => NewsCard(post: posts[index])),
-          ),
-        ),
-      ],
+    return ListView.builder(
+      itemCount: posts.length,
+      itemBuilder: ((context, index) => NewsCard(post: posts[index])),
     );
   }
 }

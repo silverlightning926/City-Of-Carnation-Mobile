@@ -1,13 +1,13 @@
-import 'package:city_of_carnation/managers/firestore_services.dart';
+import 'package:city_of_carnation/services/auth_service.dart';
+import 'package:city_of_carnation/services/firestore_service.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:city_of_carnation/services/validation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:validation_pro/validate.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -23,6 +23,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+  String phoneLocale = 'US';
 
   bool isErrored = false;
   String errorMessage = 'Something went wrong. Please try again.';
@@ -88,7 +90,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     InternationalPhoneNumberInput(
                       ignoreBlank: true,
-                      onInputChanged: (PhoneNumber number) {},
+                      onInputChanged: (PhoneNumber number) {
+                        phoneLocale = number.isoCode!;
+                      },
                       textFieldController: _phoneController,
                       selectorConfig: const SelectorConfig(
                         selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -171,133 +175,100 @@ class _SignupScreenState extends State<SignupScreen> {
                     ElevatedButton(
                       onPressed: () {
                         context.loaderOverlay.show();
-                        if (_nameController.text.isEmpty ||
-                            _emailController.text.isEmpty ||
-                            _phoneController.text.isEmpty ||
-                            _passwordController.text.isEmpty ||
-                            _confirmPasswordController.text.isEmpty) {
-                          setState(() {
-                            isErrored = true;
-                            errorMessage = 'Please fill all the fields.';
-                          });
 
-                          context.loaderOverlay.hide();
-                        } else if (!Validate.isEmail(
-                          _emailController.text.trim(),
-                        )) {
-                          setState(() {
-                            isErrored = true;
-                            errorMessage = 'Please enter a valid email.';
-                          });
+                        NameValidationResult nameValidationResult =
+                            ValidationService.validateName(
+                          _nameController.text,
+                        );
 
-                          context.loaderOverlay.hide();
-                        } else if (!RegExp(
-                          r'^[0-9]{10}$',
-                        ).hasMatch(
-                          _phoneController.text.trim(),
-                        )) {
-                          setState(() {
-                            isErrored = true;
-                            errorMessage = 'Please enter a valid phone number.';
-                          });
-
-                          context.loaderOverlay.hide();
-                        } else if (_passwordController.text.trim() !=
-                            _confirmPasswordController.text.trim()) {
-                          setState(() {
-                            isErrored = true;
-                            errorMessage = 'Passwords do not match.';
-                          });
-
-                          context.loaderOverlay.hide();
-                        } else if (!Validate.isPassword(
-                          _passwordController.text.trim(),
-                        )) {
+                        if (nameValidationResult !=
+                            NameValidationResult.valid) {
                           setState(() {
                             isErrored = true;
                             errorMessage =
-                                'Password must be 6 - 12 characters long. It must contain at least one uppercase letter, one lowercase letter, one number and one special character.';
+                                ValidationService.getNameErrorMessage(
+                                    nameValidationResult);
                           });
-
                           context.loaderOverlay.hide();
-                        } else if (_nameController.text.length > 20) {
+                          return;
+                        }
+
+                        EmailValidationResult emailValidationResult =
+                            ValidationService.validateEmail(
+                          _emailController.text,
+                        );
+
+                        if (emailValidationResult ==
+                            EmailValidationResult.invalid) {
                           setState(() {
                             isErrored = true;
                             errorMessage =
-                                'Name must be at most 20 characters long.';
+                                ValidationService.getEmailErrorMessage(
+                                    emailValidationResult);
                           });
-
                           context.loaderOverlay.hide();
-                        } else if (_phoneController.text.length > 10) {
+                          return;
+                        }
+
+                        PhoneValidationResult phoneValidationResult =
+                            ValidationService.validatePhone(
+                          _phoneController.text,
+                        );
+
+                        if (phoneValidationResult !=
+                            PhoneValidationResult.valid) {
                           setState(() {
                             isErrored = true;
                             errorMessage =
-                                'Phone number must be at most 10 characters long.';
+                                ValidationService.getPhoneErrorMessage(
+                                    phoneValidationResult);
                           });
-
                           context.loaderOverlay.hide();
-                        } else if (_emailController.text.length > 30) {
+                          return;
+                        }
+
+                        PasswordValidationResult passwordValidationResult =
+                            ValidationService.validatePassword(
+                          _passwordController.text,
+                          _confirmPasswordController.text,
+                        );
+
+                        if (passwordValidationResult !=
+                            PasswordValidationResult.valid) {
                           setState(() {
                             isErrored = true;
                             errorMessage =
-                                'Email must be at most 30 characters long.';
+                                ValidationService.getPasswordErrorMessage(
+                                    passwordValidationResult);
                           });
-
                           context.loaderOverlay.hide();
-                        } else if (_confirmPasswordController.text.length >
-                            15) {
-                          setState(() {
-                            isErrored = true;
-                            errorMessage =
-                                'Password must be at most 15 characters long.';
-                          });
+                          return;
+                        }
 
+                        createUser().then((value) {
                           context.loaderOverlay.hide();
-                        } else {
-                          FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          )
-                              .then((value) {
-                            UserData user = UserData(
-                              name: _nameController.text.trim(),
-                              email: _emailController.text.trim(),
-                              phone: _phoneController.text.trim(),
-                              uid: value.user!.uid,
-                            );
 
-                            FireStoreServices.addUserData(
-                              value.user!.uid,
-                              user,
-                            ).then(
-                              (value) {
-                                FirebaseAnalytics.instance
-                                    .logLogin(loginMethod: 'email');
-
-                                context.loaderOverlay.hide();
-
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoadingScreen(),
-                                    settings: const RouteSettings(
-                                        name: 'LoadingScreen'),
-                                  ),
-                                  (route) => false,
-                                );
-                              },
-                            );
-                          }).catchError((error) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoadingScreen(),
+                              settings:
+                                  const RouteSettings(name: 'LoadingScreen'),
+                            ),
+                            (route) => false,
+                          );
+                        }).catchError(
+                          (error) {
                             setState(() {
                               isErrored = true;
                               errorMessage =
-                                  'Something went wrong. Please try again.';
+                                  'Something went wrong! Please try again.';
                             });
-
                             context.loaderOverlay.hide();
-                          });
-                        }
+
+                            return error;
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         fixedSize: const Size(100, 75),
@@ -312,6 +283,28 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> createUser() async {
+    UserCredential userCredential =
+        await AuthService.createUserWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    UserData user = UserData(
+      name: _nameController.text.trim(),
+      email: _emailController.text.trim(),
+      phone: _phoneController.text.trim(),
+      phoneLocale: phoneLocale.trim(),
+      profilePicture: null,
+      uid: userCredential.user!.uid,
+    );
+
+    await FirestoreService.addUserData(
+      userCredential.user!.uid,
+      user,
     );
   }
 }

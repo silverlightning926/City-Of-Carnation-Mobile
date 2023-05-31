@@ -1,7 +1,7 @@
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:city_of_carnation/screens/welcome_screen.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:city_of_carnation/services/analytics_service.dart';
+import 'package:city_of_carnation/services/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -26,12 +26,8 @@ class CityOfCarnation extends StatelessWidget {
       title: 'City Of Carnation',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           color: Colors.transparent,
-          titleTextStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                color: Colors.white,
-                fontSize: 28,
-              ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.transparent,
@@ -40,11 +36,9 @@ class CityOfCarnation extends StatelessWidget {
         ),
       ),
       navigatorObservers: [
-        FirebaseAnalyticsObserver(
-          analytics: FirebaseAnalytics.instance,
-        ),
+        AnalyticsService.analyticsObserver,
       ],
-      home: FirebaseAuth.instance.currentUser == null
+      home: AuthService.user == null
           ? const WelcomeScreen()
           : const LoadingScreen(),
     );
