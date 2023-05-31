@@ -3,6 +3,7 @@ import 'package:city_of_carnation/screens/news_screen.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/services/analytics_service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
@@ -72,6 +73,13 @@ class NewsCard extends StatelessWidget {
                         Text(
                           post.author!,
                           style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          DateFormat('MMMM dd, yyyy').format(
+                            post.timestamp!.toDate().toLocal(),
+                          ),
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
                     ),
