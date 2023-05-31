@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ProfilePicture(
                         radius: 17,
                         fontsize: 10,
-                        name: snapshot.data!.name ?? '',
+                        name: snapshot.data?.name ?? '',
                         img: snapshot.data!.profilePicture,
                       ),
                     ),
