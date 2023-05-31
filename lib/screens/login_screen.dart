@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       context.loaderOverlay.show();
                       if (_emailController.text.isEmpty ||
                           _passwordController.text.isEmpty ||
@@ -119,32 +119,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         return;
                       }
 
-                      AuthService.signInWithEmailAndPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      )
-                          .then((value) => {
-                                context.loaderOverlay.hide(),
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoadingScreen(),
-                                    settings: const RouteSettings(
-                                      name: 'LoadingScreen',
-                                    ),
+                      try {
+                        await AuthService.signInWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        ).then((value) => {
+                              context.loaderOverlay.hide(),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoadingScreen(),
+                                  settings: const RouteSettings(
+                                    name: 'LoadingScreen',
                                   ),
                                 ),
-                              })
-                          .catchError(
-                        (error) {
-                          setState(() {
-                            isErrored = true;
-                          });
-                          context.loaderOverlay.hide();
-
-                          return error;
-                        },
-                      );
+                              ),
+                            });
+                      } catch (e) {
+                        setState(() {
+                          isErrored = true;
+                        });
+                        context.loaderOverlay.hide();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(100, 75),

@@ -168,7 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       context.loaderOverlay.show();
 
                       NameValidationResult nameValidationResult =
@@ -236,30 +236,29 @@ class _SignupScreenState extends State<SignupScreen> {
                         return;
                       }
 
-                      createUser().then((value) {
-                        context.loaderOverlay.hide();
-
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoadingScreen(),
-                            settings:
-                                const RouteSettings(name: 'LoadingScreen'),
-                          ),
-                          (route) => false,
-                        );
-                      }).catchError(
-                        (error) {
-                          setState(() {
-                            isErrored = true;
-                            errorMessage =
-                                'Something went wrong! Please try again.';
-                          });
+                      try {
+                        createUser().then((value) {
                           context.loaderOverlay.hide();
 
-                          return error;
-                        },
-                      );
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoadingScreen(),
+                              settings:
+                                  const RouteSettings(name: 'LoadingScreen'),
+                            ),
+                            (route) => false,
+                          );
+                        });
+                      } catch (e) {
+                        setState(() {
+                          isErrored = true;
+                          errorMessage =
+                              'Something went wrong. Please try again';
+                        });
+                        context.loaderOverlay.hide();
+                        return;
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(100, 75),
@@ -281,6 +280,8 @@ class _SignupScreenState extends State<SignupScreen> {
         await AuthService.createUserWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
+    ).catchError(
+      (error) => throw Exception(error),
     );
 
     UserData user = UserData(
