@@ -318,6 +318,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.15"
+  flutter_profile_picture:
+    dependency: "direct main"
+    description:
+      name: flutter_profile_picture
+      sha256: "067caecef0d7162d3858eaca3c5859cbbb21b3e5704c2bc5b96b50ffe267f45d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -672,14 +680,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  selectable_autolink_text:
-    dependency: "direct main"
-    description:
-      name: selectable_autolink_text
-      sha256: "62182129f4f1246473eba5839bb9641a58e8ae42b73237b65aaf373140cedf3d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.0"
   settings_ui:
     dependency: "direct main"
     description:
@@ -917,14 +917,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
-  validation_pro:
-    dependency: "direct main"
-    description:
-      name: validation_pro
-      sha256: d5c69ecb80879a473ec2cc74ac56d2db4e10567a21077596d85ed7cb1cbef810
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   vector_math:
     dependency: transitive
     description:
@@ -966,5 +958,5 @@ packages:
     source: hosted
     version: "6.3.0"
 sdks:
-  dart: ">=3.0.0 <3.7.7"
+  dart: ">=3.0.0-417 <4.0.0"
   flutter: ">=3.3.0"
