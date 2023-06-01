@@ -61,6 +61,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: ListView(
+          padding: const EdgeInsets.all(20),
           children: [
             Text('Enter A Title',
                 style: Theme.of(context).textTheme.titleLarge),

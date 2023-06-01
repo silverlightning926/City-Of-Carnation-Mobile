@@ -40,7 +40,7 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> {
         title: const Text('Update Name'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             TextField(

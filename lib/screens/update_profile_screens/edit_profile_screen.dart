@@ -3,7 +3,7 @@ import 'package:city_of_carnation/screens/update_profile_screens/update_name_scr
 import 'package:city_of_carnation/screens/update_profile_screens/update_password_screen.dart';
 import 'package:city_of_carnation/screens/update_profile_screens/update_phone_number.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
-import 'package:city_of_carnation/update_profile_photo_screen.dart';
+import 'package:city_of_carnation/screens/update_profile_screens/update_profile_photo_screen.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(20),
         children: [
           ListTile(
             leading: const Icon(Icons.photo),

@@ -21,90 +21,93 @@ class _EventsTabState extends State<EventsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  selectedMonth = selectedMonth - 1;
-                  if (selectedMonth == 0) {
-                    selectedMonth = 12;
-                    selectedYear = selectedYear - 1;
-                  }
-                });
-              },
-              padding: const EdgeInsets.all(0),
-              icon: const Icon(
-                Icons.chevron_left,
-                size: 40,
-              ),
-            ),
-            SizedBox(
-              width: 200,
-              child: Ink(
-                child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      DateFormat('MMMM yyyy').format(
-                        DateTime(selectedYear, selectedMonth),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                  onLongPress: () {
-                    setState(() {
-                      selectedMonth = DateTime.now().month;
-                      selectedYear = DateTime.now().year;
-                    });
-                  },
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    selectedMonth = selectedMonth - 1;
+                    if (selectedMonth == 0) {
+                      selectedMonth = 12;
+                      selectedYear = selectedYear - 1;
+                    }
+                  });
+                },
+                padding: const EdgeInsets.all(0),
+                icon: const Icon(
+                  Icons.chevron_left,
+                  size: 40,
                 ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  selectedMonth = selectedMonth + 1;
-                  if (selectedMonth == 13) {
-                    selectedMonth = 1;
-                    selectedYear = selectedYear + 1;
-                  }
-                });
-              },
-              padding: const EdgeInsets.all(0),
-              icon: const Icon(
-                Icons.chevron_right,
-                size: 40,
+              SizedBox(
+                width: 200,
+                child: Ink(
+                  child: InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        DateFormat('MMMM yyyy').format(
+                          DateTime(selectedYear, selectedMonth),
+                        ),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    onLongPress: () {
+                      setState(() {
+                        selectedMonth = DateTime.now().month;
+                        selectedYear = DateTime.now().year;
+                      });
+                    },
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Expanded(
-          child: ListView.builder(
-            itemCount: widget.events.length,
-            itemBuilder: ((context, index) {
-              if (widget.events[index].startingTimestamp!.toDate().month ==
-                      selectedMonth &&
-                  widget.events[index].startingTimestamp!.toDate().year ==
-                      selectedYear) {
-                return EventCard(event: widget.events[index]);
-              } else {
-                return const SizedBox();
-              }
-            }),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    selectedMonth = selectedMonth + 1;
+                    if (selectedMonth == 13) {
+                      selectedMonth = 1;
+                      selectedYear = selectedYear + 1;
+                    }
+                  });
+                },
+                padding: const EdgeInsets.all(0),
+                icon: const Icon(
+                  Icons.chevron_right,
+                  size: 40,
+                ),
+              ),
+            ],
           ),
-        )
-      ],
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: widget.events.length,
+              itemBuilder: ((context, index) {
+                if (widget.events[index].startingTimestamp!.toDate().month ==
+                        selectedMonth &&
+                    widget.events[index].startingTimestamp!.toDate().year ==
+                        selectedYear) {
+                  return EventCard(event: widget.events[index]);
+                } else {
+                  return const SizedBox();
+                }
+              }),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

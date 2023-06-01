@@ -19,6 +19,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         body: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 60,
+            horizontal: 20,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

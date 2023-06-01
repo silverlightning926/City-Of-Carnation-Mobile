@@ -107,31 +107,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.only(
-              top: 15,
-              right: 15,
-              left: 15,
-            ),
-            child: IndexedStack(
-              index: _selectedIndex,
-              children: [
-                HomeTab(
-                  featuredPost: _featuredPost,
-                  upcomingEvents: _upcomingEvents,
-                ),
-                NotifyTab(
-                  workOrders: widget.workOrders,
-                  workOrderStream: widget.workOrderStream,
-                ),
-                FeedTab(
-                  posts: widget.posts,
-                ),
-                EventsTab(
-                  events: widget.events,
-                ),
-              ],
-            ),
+          body: IndexedStack(
+            index: _selectedIndex,
+            children: [
+              HomeTab(
+                featuredPost: _featuredPost,
+                upcomingEvents: _upcomingEvents,
+              ),
+              NotifyTab(
+                workOrders: widget.workOrders,
+                workOrderStream: widget.workOrderStream,
+              ),
+              FeedTab(
+                posts: widget.posts,
+              ),
+              EventsTab(
+                events: widget.events,
+              ),
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => setState(() => _selectedIndex = value),

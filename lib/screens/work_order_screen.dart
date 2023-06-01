@@ -30,12 +30,7 @@ class WorkOrderScreen extends StatelessWidget {
                     color: Colors.blue,
                   ),
                   centerTitle: false,
-                  titlePadding: const EdgeInsets.only(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    bottom: 20,
-                  ),
+                  titlePadding: const EdgeInsets.all(20),
                   title: Text(
                     workOrder.title!,
                     textAlign: TextAlign.left,

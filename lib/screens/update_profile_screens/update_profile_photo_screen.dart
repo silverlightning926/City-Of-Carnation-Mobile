@@ -34,7 +34,7 @@ class _UpdateProfilePhotoScreenState extends State<UpdateProfilePhotoScreen> {
             title: const Text('Update Profile Photo'),
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

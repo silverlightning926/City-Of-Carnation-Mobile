@@ -44,7 +44,7 @@ class _UpdatePhoneScreenState extends State<UpdatePhoneScreen> {
         title: const Text('Update Phone Number'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

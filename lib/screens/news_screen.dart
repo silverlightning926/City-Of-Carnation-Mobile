@@ -40,7 +40,9 @@ class NewsScreen extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               background: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(10),
+                ),
                 child: CachedNetworkImage(
                   imageUrl: post.image!,
                   color: const Color.fromARGB(188, 0, 0, 0),
@@ -54,7 +56,7 @@ class NewsScreen extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

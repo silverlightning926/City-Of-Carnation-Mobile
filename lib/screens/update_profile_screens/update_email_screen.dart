@@ -43,7 +43,7 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
           title: const Text('Update Email'),
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

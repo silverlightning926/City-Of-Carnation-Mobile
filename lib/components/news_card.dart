@@ -15,82 +15,79 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(10),
-        child: Ink(
-          width: double.infinity,
-          height: 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(
-                post.image!,
-              ),
-              colorFilter: const ColorFilter.mode(
-                Color.fromARGB(188, 0, 0, 0),
-                BlendMode.darken,
-              ),
-              fit: BoxFit.cover,
+    return Material(
+      borderRadius: BorderRadius.circular(10),
+      child: Ink(
+        width: double.infinity,
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              post.image!,
             ),
+            colorFilter: const ColorFilter.mode(
+              Color.fromARGB(188, 0, 0, 0),
+              BlendMode.darken,
+            ),
+            fit: BoxFit.cover,
           ),
-          child: InkWell(
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NewsScreen(
-                    post: post,
-                  ),
-                  settings: const RouteSettings(name: 'NewsScreen'),
+        ),
+        child: InkWell(
+          customBorder: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewsScreen(
+                  post: post,
                 ),
-              );
-
-              AnalyticsService.newsCardClick(
-                id: post.id ?? 'No ID',
-                title: post.title ?? 'No title',
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          post.title!,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          post.author!,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          DateFormat('MMMM dd, yyyy').format(
-                            post.timestamp!.toDate().toLocal(),
-                          ),
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Icon(
-                    Icons.chevron_right,
-                    color: Colors.white,
-                    size: 50,
-                  ),
-                ],
+                settings: const RouteSettings(name: 'NewsScreen'),
               ),
+            );
+
+            AnalyticsService.newsCardClick(
+              id: post.id ?? 'No ID',
+              title: post.title ?? 'No title',
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        post.title!,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        post.author!,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        DateFormat('MMMM dd, yyyy').format(
+                          post.timestamp!.toDate().toLocal(),
+                        ),
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(
+                  Icons.chevron_right,
+                  color: Colors.white,
+                  size: 50,
+                ),
+              ],
             ),
           ),
         ),

@@ -17,6 +17,7 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.all(20),
       children: [
         Container(
           width: double.infinity,
@@ -30,6 +31,7 @@ class HomeTab extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
+        const SizedBox(height: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -43,6 +45,7 @@ class HomeTab extends StatelessWidget {
             NewsCard(post: featuredPost),
           ],
         ),
+        const SizedBox(height: 10),
         Visibility(
           visible: upcomingEvents.isNotEmpty,
           child: Column(

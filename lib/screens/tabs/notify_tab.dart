@@ -17,6 +17,7 @@ class NotifyTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.all(20),
       children: [
         Material(
           borderRadius: BorderRadius.circular(10),
