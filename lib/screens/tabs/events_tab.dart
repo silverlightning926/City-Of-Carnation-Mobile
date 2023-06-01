@@ -21,12 +21,12 @@ class _EventsTabState extends State<EventsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -90,24 +90,25 @@ class _EventsTabState extends State<EventsTab> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.events.length,
-              itemBuilder: ((context, index) {
-                if (widget.events[index].startingTimestamp!.toDate().month ==
-                        selectedMonth &&
-                    widget.events[index].startingTimestamp!.toDate().year ==
-                        selectedYear) {
-                  return EventCard(event: widget.events[index]);
-                } else {
-                  return const SizedBox();
-                }
-              }),
-            ),
-          )
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(20),
+            itemCount: widget.events.length,
+            itemBuilder: ((context, index) {
+              if (widget.events[index].startingTimestamp!.toDate().month ==
+                      selectedMonth &&
+                  widget.events[index].startingTimestamp!.toDate().year ==
+                      selectedYear) {
+                return EventCard(event: widget.events[index]);
+              } else {
+                return const SizedBox();
+              }
+            }),
+          ),
+        )
+      ],
     );
   }
 }
