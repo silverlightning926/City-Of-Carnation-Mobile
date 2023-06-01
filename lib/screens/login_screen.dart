@@ -1,3 +1,4 @@
+import 'package:city_of_carnation/screens/forgot_password_screen.dart';
 import 'package:city_of_carnation/screens/loading_screen.dart';
 import 'package:city_of_carnation/services/auth_service.dart';
 import 'package:city_of_carnation/services/validation_service.dart';
@@ -143,13 +144,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 75),
                       backgroundColor: const Color(0xFF6C63FF),
                     ),
                     child: const Text('Login'),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const ForgotPasswordScreen();
+                      }));
+                    },
                     child: const Text('Forgot Password?'),
                   ),
                 ],

@@ -46,7 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Scaffold(
           appBar: AppBar(),
           body: ListView(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -261,7 +261,6 @@ class _SignupScreenState extends State<SignupScreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 75),
                       backgroundColor: const Color(0xFF6C63FF),
                     ),
                     child: const Text('Register'),
