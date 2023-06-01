@@ -82,12 +82,10 @@ class NotifyTab extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 if (openWorkOrders.isEmpty)
-                  const Center(
+                  Center(
                     child: Text(
                       'No open work orders',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   )
                 else
@@ -105,12 +103,10 @@ class NotifyTab extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 if (closedWorkOrders.isEmpty)
-                  const Center(
+                  Center(
                     child: Text(
                       'No closed work orders',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   )
                 else

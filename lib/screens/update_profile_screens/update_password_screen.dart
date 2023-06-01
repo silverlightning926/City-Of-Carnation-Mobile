@@ -30,11 +30,9 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
+                Text(
                   'Enter your current password and new password below.',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 15),
                 TextField(

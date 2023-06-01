@@ -75,13 +75,12 @@ class NoImage extends StatelessWidget {
     return CircleAvatar(
       radius: radius,
       foregroundColor: Colors.white,
+      backgroundColor: Colors.purple,
       child: Text(
         name == '' ? '' : InitialName.parseName(name, count).toUpperCase(),
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: fontsize,
-          letterSpacing: 1.4,
-        ),
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontSize: fontsize,
+            ),
       ),
     );
   }

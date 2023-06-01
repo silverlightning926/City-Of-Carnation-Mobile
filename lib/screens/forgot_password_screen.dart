@@ -31,13 +31,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Text(
               'Enter your email address and we will send you a link to reset your password.',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           TextField(

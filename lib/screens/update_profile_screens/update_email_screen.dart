@@ -47,11 +47,9 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 'Enter your current password and new email.',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 15),
               TextField(

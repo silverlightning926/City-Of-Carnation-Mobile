@@ -56,10 +56,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
         automaticallyImplyLeading: true,
         title: const Text(
           'New Work Order',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 23,
-          ),
         ),
       ),
       body: Padding(

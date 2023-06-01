@@ -25,26 +25,19 @@ class HomeTab extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white.withOpacity(0.175),
           ),
-          child: const Text(
+          child: Text(
             'Welcome to the City Of Carnation mobile app! We want to make it easier for you to connect with your city. We hope you enjoy the app and find it useful. If you have any questions or feedback, please email us at cityhall@carnationwa.gov.',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 'Featured News',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             NewsCard(post: featuredPost),
@@ -55,15 +48,11 @@ class HomeTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
                   'Upcoming Events',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               SizedBox(
