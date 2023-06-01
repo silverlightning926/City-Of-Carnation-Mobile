@@ -67,18 +67,14 @@ class WorkOrderCard extends StatelessWidget {
                   workOrder.title!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                      ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 5),
                 Text(
                   workOrder.status!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Colors.white,
-                      ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),

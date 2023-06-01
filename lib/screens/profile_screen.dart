@@ -74,13 +74,7 @@ class ProfileScreen extends StatelessWidget {
                       Center(
                         child: Text(
                           snapshot.data?.name ?? '',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -102,11 +96,7 @@ class ProfileScreen extends StatelessWidget {
                         leading: const Icon(Icons.email),
                         title: Text(
                           snapshot.data?.email ?? '',
-                          style:
-                              Theme.of(context).textTheme.titleLarge!.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                       const SizedBox(height: 25),
@@ -117,11 +107,7 @@ class ProfileScreen extends StatelessWidget {
                                   RegExp(r'(\d{3})(\d{3})(\d+)'),
                                   (Match m) => "(${m[1]}) ${m[2]}-${m[3]}") ??
                               '',
-                          style:
-                              Theme.of(context).textTheme.titleLarge!.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                     ],

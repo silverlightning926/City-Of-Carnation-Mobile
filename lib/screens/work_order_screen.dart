@@ -90,55 +90,26 @@ class WorkOrderScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   '${workOrder.status}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge!,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'On ${DateFormat.yMMMMd().format(
                                     workOrder.timestamp!.toDate(),
                                   )}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.italic,
-                                      ),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'At ${workOrder.location}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.italic,
-                                      ),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'Priority Level ${workOrder.priority}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.italic,
-                                      ),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ],
                             ),
@@ -146,12 +117,7 @@ class WorkOrderScreen extends StatelessWidget {
                           const SizedBox(height: 15),
                           Text(
                             workOrder.description!,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           const SizedBox(height: 15),
                           (workOrder.image != null && workOrder.image != '')

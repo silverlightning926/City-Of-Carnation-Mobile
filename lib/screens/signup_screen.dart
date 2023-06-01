@@ -52,9 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
                   "Register",
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: Colors.white,
-                      ),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
               Column(
@@ -156,9 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Text(
                         errorMessage,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                            ),
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                   ),

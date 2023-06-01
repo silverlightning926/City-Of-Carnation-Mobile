@@ -76,9 +76,7 @@ class NotifyTab extends StatelessWidget {
               children: [
                 Text(
                   'Open',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                      ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 15),
                 if (openWorkOrders.isEmpty)
@@ -97,9 +95,7 @@ class NotifyTab extends StatelessWidget {
                 const SizedBox(height: 15),
                 Text(
                   'Closed',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                      ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 15),
                 if (closedWorkOrders.isEmpty)

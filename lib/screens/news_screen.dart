@@ -72,27 +72,12 @@ class NewsScreen extends StatelessWidget {
                           children: [
                             Text(
                               'By ${post.author}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const SizedBox(height: 5),
                             Text(
                               'On ${DateFormat.yMMMMd().format(post.timestamp!.toDate())}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.italic,
-                                  ),
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
                         ),
@@ -119,11 +104,7 @@ class NewsScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(bottom: 18.0),
                           child: Text(
                             paragraph,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: 20,
-                                      height: 1.3,
-                                    ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                     ],

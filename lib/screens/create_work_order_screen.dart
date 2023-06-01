@@ -62,8 +62,8 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
         padding: const EdgeInsets.all(15.0),
         child: ListView(
           children: [
-            Text(
-              'Enter A Title',
+            Text('Enter A Title',
+                style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 15),
             TextField(
               controller: _titleController,
@@ -75,7 +75,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             const SizedBox(height: 20),
             Text(
               'Enter A Description',
-              style: Theme.of(context)
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             TextField(
@@ -89,7 +89,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             const SizedBox(height: 20),
             Text(
               'Add Image',
-              style: Theme.of(context)
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             Ink(
@@ -137,7 +137,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             const SizedBox(height: 20),
             Text(
               'Enter A Location',
-              style: Theme.of(context)
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             TextField(
@@ -150,7 +150,7 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             const SizedBox(height: 20),
             Text(
               'Enter A Priority',
-              style: Theme.of(context)
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             Container(

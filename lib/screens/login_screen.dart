@@ -41,9 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Text(
               "Login",
-              style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    color: Colors.white,
-                  ),
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
           Column(
@@ -92,9 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Something went wrong. Please try again.',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Colors.white,
-                        ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
               ),

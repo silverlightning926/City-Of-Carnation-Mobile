@@ -66,9 +66,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   child: Text(
                     errorMessage,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Colors.white,
-                        ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
               ),

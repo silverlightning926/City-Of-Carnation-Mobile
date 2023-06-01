@@ -18,11 +18,8 @@ class CloudStorageService {
 
   static Future<String> uploadWorkOrderPhoto(
       {required File imageFile, required String name}) async {
-    final ref = _storage
-        .ref()
-        .child(
-            'user-storage/${AuthService.userId}/work-orders/images/${DateTime.now().millisecondsSinceEpoch}-${_randomAlphaNumeric(5)}-${sanitizeFilename(name)}')
-        .child(AuthService.userId!);
+    final ref = _storage.ref('user-storage').child(
+        '${AuthService.userId}/work-orders/images/${DateTime.now().millisecondsSinceEpoch}-${_randomAlphaNumeric(5)}-${sanitizeFilename(name)}');
     await ref.putFile(imageFile);
     return await ref.getDownloadURL();
   }
