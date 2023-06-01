@@ -30,9 +30,6 @@ class CityOfCarnation extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           elevation: 0,
           color: Colors.transparent,
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.transparent,
