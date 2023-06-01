@@ -113,6 +113,7 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
                         );
 
                         if (context.mounted) {
+                          context.loaderOverlay.hide();
                           Navigator.of(context).popUntil(
                             (route) => route.isFirst,
                           );

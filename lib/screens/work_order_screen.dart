@@ -50,6 +50,7 @@ class WorkOrderScreen extends StatelessWidget {
 
                       FirestoreService.deleteWorkOrder(workOrder.id!).then(
                         (value) {
+                          context.loaderOverlay.hide();
                           Navigator.pop(context);
 
                           AnalyticsService.logEvent(

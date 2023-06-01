@@ -80,9 +80,12 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> {
                     AuthService.userId!,
                     newUserData,
                   ).then(
-                    (value) => Navigator.of(context).popUntil(
-                      (route) => route.isFirst,
-                    ),
+                    (value) {
+                      context.loaderOverlay.hide();
+                      Navigator.of(context).popUntil(
+                        (route) => route.isFirst,
+                      );
+                    },
                   );
 
                   AnalyticsService.setUserProperties(
