@@ -35,69 +35,65 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LoaderOverlay(
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Update Name'),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    border: OutlineInputBorder(),
-                  ),
-                  controller: _nameController,
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () {
-                    context.loaderOverlay.show();
-                    NameValidationResult nameValidationResult =
-                        ValidationService.validateName(
-                      _nameController.text,
-                      oldName: widget.userData.name,
-                    );
-
-                    if (nameValidationResult != NameValidationResult.valid) {
-                      context.loaderOverlay.hide();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            ValidationService.getNameErrorMessage(
-                              nameValidationResult,
-                            ),
-                          ),
-                        ),
-                      );
-                      return;
-                    } else {
-                      UserData newUserData = widget.userData;
-                      newUserData.name = _nameController.text;
-
-                      FirestoreService.updateUserData(
-                        AuthService.userId!,
-                        newUserData,
-                      ).then(
-                        (value) => Navigator.of(context).popUntil(
-                          (route) => route.isFirst,
-                        ),
-                      );
-
-                      AnalyticsService.setUserProperties(
-                        name: 'name',
-                        value: _nameController.text,
-                      );
-                    }
-                  },
-                  child: const Text('Update'),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Update Name'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                border: OutlineInputBorder(),
+              ),
+              controller: _nameController,
             ),
-          ),
+            const SizedBox(height: 15),
+            ElevatedButton(
+              onPressed: () {
+                context.loaderOverlay.show();
+                NameValidationResult nameValidationResult =
+                    ValidationService.validateName(
+                  _nameController.text,
+                  oldName: widget.userData.name,
+                );
+
+                if (nameValidationResult != NameValidationResult.valid) {
+                  context.loaderOverlay.hide();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        ValidationService.getNameErrorMessage(
+                          nameValidationResult,
+                        ),
+                      ),
+                    ),
+                  );
+                  return;
+                } else {
+                  UserData newUserData = widget.userData;
+                  newUserData.name = _nameController.text;
+
+                  FirestoreService.updateUserData(
+                    AuthService.userId!,
+                    newUserData,
+                  ).then(
+                    (value) => Navigator.of(context).popUntil(
+                      (route) => route.isFirst,
+                    ),
+                  );
+
+                  AnalyticsService.setUserProperties(
+                    name: 'name',
+                    value: _nameController.text,
+                  );
+                }
+              },
+              child: const Text('Update'),
+            ),
+          ],
         ),
       ),
     );

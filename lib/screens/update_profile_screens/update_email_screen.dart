@@ -37,117 +37,114 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LoaderOverlay(
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Update Email'),
-          ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Enter your current password and new email.',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Update Email'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Enter your current password and new email.',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
-                const SizedBox(height: 15),
-                TextField(
-                  controller: _emailController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(RegExp(r"\s")),
-                  ],
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
+              ),
+              const SizedBox(height: 15),
+              TextField(
+                controller: _emailController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                ],
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
-                const SizedBox(height: 15),
-                TextField(
-                  obscureText: true,
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Current Password',
-                    border: OutlineInputBorder(),
-                  ),
+              ),
+              const SizedBox(height: 15),
+              TextField(
+                obscureText: true,
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Current Password',
+                  border: OutlineInputBorder(),
                 ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () async {
-                    EmailValidationResult emailValidationResult =
-                        ValidationService.validateEmail(
-                      _emailController.text,
-                      oldEmail: widget.userData.email,
-                    );
+              ),
+              const SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: () async {
+                  EmailValidationResult emailValidationResult =
+                      ValidationService.validateEmail(
+                    _emailController.text,
+                    oldEmail: widget.userData.email,
+                  );
 
-                    if (_passwordController.text.isEmpty ||
-                        _emailController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Please fill in all fields.',
-                          ),
+                  if (_passwordController.text.isEmpty ||
+                      _emailController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please fill in all fields.',
                         ),
-                      );
-                    } else {
-                      if (emailValidationResult ==
-                          EmailValidationResult.valid) {
-                        context.loaderOverlay.show();
-                        FocusManager.instance.primaryFocus?.unfocus();
+                      ),
+                    );
+                  } else {
+                    if (emailValidationResult == EmailValidationResult.valid) {
+                      context.loaderOverlay.show();
+                      FocusManager.instance.primaryFocus?.unfocus();
 
-                        try {
-                          await AuthService.reauthenticateUser(
-                            email: widget.userData.email!,
-                            password: _passwordController.text,
-                          );
+                      try {
+                        await AuthService.reauthenticateUser(
+                          email: widget.userData.email!,
+                          password: _passwordController.text,
+                        );
 
-                          await AuthService.updateUserEmail(
-                            email: _emailController.text,
-                          );
+                        await AuthService.updateUserEmail(
+                          email: _emailController.text,
+                        );
 
-                          UserData newUserData = widget.userData;
-                          newUserData.email = _emailController.text;
+                        UserData newUserData = widget.userData;
+                        newUserData.email = _emailController.text;
 
-                          await FirestoreService.updateUserData(
-                            AuthService.userId!,
-                            newUserData,
-                          );
+                        await FirestoreService.updateUserData(
+                          AuthService.userId!,
+                          newUserData,
+                        );
 
-                          if (context.mounted) {
-                            Navigator.of(context).popUntil(
-                              (route) => route.isFirst,
-                            );
-                          }
-                        } catch (error) {
-                          context.loaderOverlay.hide();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Something went wrong. Please try again.',
-                              ),
-                            ),
+                        if (context.mounted) {
+                          Navigator.of(context).popUntil(
+                            (route) => route.isFirst,
                           );
                         }
-                      } else {
+                      } catch (error) {
+                        context.loaderOverlay.hide();
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text(
-                              ValidationService.getEmailErrorMessage(
-                                emailValidationResult,
-                              ),
+                              'Something went wrong. Please try again.',
                             ),
                           ),
                         );
                       }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            ValidationService.getEmailErrorMessage(
+                              emailValidationResult,
+                            ),
+                          ),
+                        ),
+                      );
                     }
-                  },
-                  child: const Text('Update Password'),
-                ),
-              ],
-            ),
+                  }
+                },
+                child: const Text('Update Password'),
+              ),
+            ],
           ),
         ),
       ),

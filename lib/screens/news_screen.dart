@@ -20,124 +20,120 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              expandedHeight: 250.0,
-              collapsedHeight: 125.0,
-              flexibleSpace: FlexibleSpaceBar(
-                centerTitle: false,
-                titlePadding: const EdgeInsets.only(
-                  top: 20,
-                  left: 20,
-                  right: 20,
-                  bottom: 20,
-                ),
-                title: Text(
-                  post.title!,
-                  textAlign: TextAlign.left,
-                ),
-                background: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: CachedNetworkImage(
-                    imageUrl: post.image!,
-                    color: const Color.fromARGB(188, 0, 0, 0),
-                    colorBlendMode: BlendMode.darken,
-                    fit: BoxFit.cover,
-                  ),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 250.0,
+            collapsedHeight: 125.0,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
+              titlePadding: const EdgeInsets.only(
+                top: 20,
+                left: 20,
+                right: 20,
+                bottom: 20,
+              ),
+              title: Text(
+                post.title!,
+                textAlign: TextAlign.left,
+              ),
+              background: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: CachedNetworkImage(
+                  imageUrl: post.image!,
+                  color: const Color.fromARGB(188, 0, 0, 0),
+                  colorBlendMode: BlendMode.darken,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(
-                          height: 15,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.175),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(15.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.175),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'By ${post.author}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                'On ${DateFormat.yMMMMd().format(post.timestamp!.toDate())}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-                        Wrap(
-                          spacing: 10.0,
-                          runSpacing: 10.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            for (String tag in post.tags!)
-                              Container(
-                                padding: const EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                  color: stringToColor(tag),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(tag),
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: 25),
-                        for (String paragraph in post.body!)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 18.0),
-                            child: Text(
-                              paragraph,
+                            Text(
+                              'By ${post.author}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyLarge!
+                                  .titleMedium!
                                   .copyWith(
-                                    fontSize: 20,
-                                    height: 1.3,
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
                                   ),
                             ),
+                            const SizedBox(height: 5),
+                            Text(
+                              'On ${DateFormat.yMMMMd().format(post.timestamp!.toDate())}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        children: [
+                          for (String tag in post.tags!)
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: stringToColor(tag),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(tag),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 25),
+                      for (String paragraph in post.body!)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 18.0),
+                          child: Text(
+                            paragraph,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontSize: 20,
+                                      height: 1.3,
+                                    ),
                           ),
-                      ],
-                    ),
-                  );
-                },
-                childCount: 1,
-              ),
-            )
-          ],
-        ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+              childCount: 1,
+            ),
+          )
+        ],
       ),
     );
   }

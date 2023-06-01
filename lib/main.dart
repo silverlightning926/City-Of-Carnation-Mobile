@@ -4,6 +4,7 @@ import 'package:city_of_carnation/services/analytics_service.dart';
 import 'package:city_of_carnation/services/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import 'firebase_options.dart';
 
@@ -38,6 +39,17 @@ class CityOfCarnation extends StatelessWidget {
       navigatorObservers: [
         AnalyticsService.analyticsObserver,
       ],
+      builder: (context, child) {
+        return SafeArea(
+          child: LoaderOverlay(
+            overlayColor: Colors.black.withOpacity(0.5),
+            overlayWidget: const Center(
+              child: CircularProgressIndicator(),
+            ),
+            child: child!,
+          ),
+        );
+      },
       home: AuthService.user == null
           ? const WelcomeScreen()
           : const LoadingScreen(),

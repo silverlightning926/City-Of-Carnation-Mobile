@@ -78,13 +78,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: SpinKitFadingCube(
-            size: 100.0,
-            color: Colors.white,
-          ),
+    return const Scaffold(
+      body: Center(
+        child: SpinKitFadingCube(
+          size: 100.0,
+          color: Colors.white,
         ),
       ),
     );

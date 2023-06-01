@@ -63,100 +63,98 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: widget.userDataStream,
-      initialData: widget.userData,
-      builder: (context, snapshot) => WillPopScope(
-        onWillPop: () async => false,
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              title: Text(
-                [
-                  'Welcome ${snapshot.data?.name?.split(' ')[0]}!',
-                  'Notify',
-                  'Feed',
-                  'Events',
-                ][_selectedIndex],
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Ink(
-                    child: InkWell(
-                      customBorder: const CircleBorder(),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(
-                              userData: snapshot.data!,
-                              userDataStream: widget.userDataStream,
-                            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: StreamBuilder(
+        stream: widget.userDataStream,
+        initialData: widget.userData,
+        builder: (context, snapshot) => Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              [
+                'Welcome ${snapshot.data?.name?.split(' ')[0]}!',
+                'Notify',
+                'Feed',
+                'Events',
+              ][_selectedIndex],
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Ink(
+                  child: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(
+                            userData: snapshot.data!,
+                            userDataStream: widget.userDataStream,
                           ),
-                        );
-                      },
-                      child: ProfilePicture(
-                        radius: 17,
-                        fontsize: 10,
-                        name: snapshot.data?.name ?? '',
-                        img: snapshot.data!.profilePicture,
-                      ),
+                        ),
+                      );
+                    },
+                    child: ProfilePicture(
+                      radius: 17,
+                      fontsize: 10,
+                      name: snapshot.data?.name ?? '',
+                      img: snapshot.data!.profilePicture,
                     ),
                   ),
                 ),
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.only(
-                top: 15,
-                right: 15,
-                left: 15,
               ),
-              child: IndexedStack(
-                index: _selectedIndex,
-                children: [
-                  HomeTab(
-                    featuredPost: _featuredPost,
-                    upcomingEvents: _upcomingEvents,
-                  ),
-                  NotifyTab(
-                    workOrders: widget.workOrders,
-                    workOrderStream: widget.workOrderStream,
-                  ),
-                  FeedTab(
-                    posts: widget.posts,
-                  ),
-                  EventsTab(
-                    events: widget.events,
-                  ),
-                ],
-              ),
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(
+              top: 15,
+              right: 15,
+              left: 15,
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: (value) => setState(() => _selectedIndex = value),
-              currentIndex: _selectedIndex,
-              type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+            child: IndexedStack(
+              index: _selectedIndex,
+              children: [
+                HomeTab(
+                  featuredPost: _featuredPost,
+                  upcomingEvents: _upcomingEvents,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.construction),
-                  label: 'Notify',
+                NotifyTab(
+                  workOrders: widget.workOrders,
+                  workOrderStream: widget.workOrderStream,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.newspaper),
-                  label: 'Feed',
+                FeedTab(
+                  posts: widget.posts,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_month),
-                  label: 'Events',
+                EventsTab(
+                  events: widget.events,
                 ),
               ],
             ),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) => setState(() => _selectedIndex = value),
+            currentIndex: _selectedIndex,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.construction),
+                label: 'Notify',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.newspaper),
+                label: 'Feed',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month),
+                label: 'Events',
+              ),
+            ],
           ),
         ),
       ),

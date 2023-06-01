@@ -21,97 +21,95 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo),
-              title: const Text('Update Profile Photo'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => UpdateProfilePhotoScreen(
-                      userData: widget.userData,
-                    ),
-                    settings: const RouteSettings(
-                      name: 'UpdateProfilePhotoScreen',
-                    ),
+    return Scaffold(
+      appBar: AppBar(),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        children: [
+          ListTile(
+            leading: const Icon(Icons.photo),
+            title: const Text('Update Profile Photo'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UpdateProfilePhotoScreen(
+                    userData: widget.userData,
                   ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Update Name'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => UpdateNameScreen(
-                      userData: widget.userData,
-                    ),
-                    settings: const RouteSettings(
-                      name: 'UpdateNameScreen',
-                    ),
+                  settings: const RouteSettings(
+                    name: 'UpdateProfilePhotoScreen',
                   ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.email),
-              title: const Text('Update Email'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => UpdateEmailScreen(
-                      userData: widget.userData,
-                    ),
-                    settings: const RouteSettings(
-                      name: 'UpdateEmailScreen',
-                    ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Update Name'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UpdateNameScreen(
+                    userData: widget.userData,
                   ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.phone),
-              title: const Text('Update Phone Number'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => UpdatePhoneScreen(
-                      userData: widget.userData,
-                    ),
-                    settings: const RouteSettings(
-                      name: 'UpdateEmailScreen',
-                    ),
+                  settings: const RouteSettings(
+                    name: 'UpdateNameScreen',
                   ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.password),
-              title: const Text('Update Password'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const UpdatePasswordScreen(),
-                    settings: const RouteSettings(
-                      name: 'UpdatePasswordScreen',
-                    ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.email),
+            title: const Text('Update Email'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UpdateEmailScreen(
+                    userData: widget.userData,
                   ),
-                );
-              },
-            ),
-          ],
-        ),
+                  settings: const RouteSettings(
+                    name: 'UpdateEmailScreen',
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.phone),
+            title: const Text('Update Phone Number'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UpdatePhoneScreen(
+                    userData: widget.userData,
+                  ),
+                  settings: const RouteSettings(
+                    name: 'UpdateEmailScreen',
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.password),
+            title: const Text('Update Password'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const UpdatePasswordScreen(),
+                  settings: const RouteSettings(
+                    name: 'UpdatePasswordScreen',
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
