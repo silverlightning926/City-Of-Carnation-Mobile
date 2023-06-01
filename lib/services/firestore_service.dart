@@ -7,25 +7,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_cache/firestore_cache.dart';
 
 class FirestoreService {
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   static final CollectionReference<Map<String, dynamic>> _userInfoRef =
-      FirebaseFirestore.instance.collection('user-info');
+      _firestore.collection('user-info');
 
   static final CollectionReference<Map<String, dynamic>> _postFeedRef =
-      FirebaseFirestore.instance.collection('post-feed');
+      _firestore.collection('post-feed');
 
   static final CollectionReference<Map<String, dynamic>> _eventInfoRef =
-      FirebaseFirestore.instance.collection('event-info');
+      _firestore.collection('event-info');
 
   static final CollectionReference<Map<String, dynamic>> _workOrderRef =
-      FirebaseFirestore.instance.collection('work-orders');
+      _firestore.collection('work-orders');
 
   static final DocumentReference<Map<String, dynamic>> _postFeedCacheRef =
-      FirebaseFirestore.instance.collection('status').doc('post-feed');
+      _firestore.collection('status').doc('post-feed');
 
   static const String postFeedCacheField = 'lastUpdated';
 
   static final DocumentReference<Map<String, dynamic>> _eventInfoCacheRef =
-      FirebaseFirestore.instance.collection('status').doc('event-info');
+      _firestore.collection('status').doc('event-info');
 
   static const String _eventInfoCacheField = 'lastUpdated';
 
@@ -33,7 +35,7 @@ class FirestoreService {
       _postFeedRef.orderBy('timestamp', descending: true);
 
   static final Query<Map<String, dynamic>> _eventInfoQuery =
-      _eventInfoRef.orderBy('timestamp', descending: true);
+      _eventInfoRef.orderBy('startingTimestamp', descending: true);
 
   static final Query<Map<String, dynamic>> _workOrderQuery =
       _workOrderRef.orderBy('timestamp', descending: true);
