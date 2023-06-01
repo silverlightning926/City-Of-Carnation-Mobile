@@ -64,11 +64,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
           children: [
             Text(
               'Enter A Title',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
-            ),
             const SizedBox(height: 15),
             TextField(
               controller: _titleController,
@@ -81,9 +76,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             Text(
               'Enter A Description',
               style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
             ),
             const SizedBox(height: 15),
             TextField(
@@ -98,9 +90,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             Text(
               'Add Image',
               style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
             ),
             const SizedBox(height: 15),
             Ink(
@@ -149,9 +138,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             Text(
               'Enter A Location',
               style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
             ),
             const SizedBox(height: 15),
             TextField(
@@ -165,9 +151,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             Text(
               'Enter A Priority',
               style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
             ),
             const SizedBox(height: 15),
             Container(
@@ -198,33 +181,33 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 context.loaderOverlay.show();
-                createWorkOrder().then(
-                  (value) {
-                    context.loaderOverlay.hide();
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Work order created successfully.',
-                        ),
+                try {
+                  await createWorkOrder();
+                } catch (e) {
+                  context.loaderOverlay.hide();
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Something went wrong. Please try again.',
                       ),
-                    );
-                  },
-                ).catchError(
-                  (error) {
-                    context.loaderOverlay.hide();
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Something went wrong. Please try again.',
-                        ),
+                    ),
+                  );
+                }
+
+                if (context.mounted) {
+                  context.loaderOverlay.hide();
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Work order created successfully.',
                       ),
-                    );
-                  },
-                );
+                    ),
+                  );
+                }
               },
               child: const Text('Submit'),
             ),
@@ -263,7 +246,6 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
       AuthService.userId!,
       workOrder,
     ).then((value) {
-      Navigator.of(context).pop();
       AnalyticsService.workOrderCreated(
         title: workOrder.title ?? 'No title',
       );
