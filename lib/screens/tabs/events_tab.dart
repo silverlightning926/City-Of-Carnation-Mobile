@@ -102,9 +102,8 @@ class _EventsTabState extends State<EventsTab> {
                   widget.events[index].startingTimestamp!.toDate().year ==
                       selectedYear) {
                 return EventCard(event: widget.events[index]);
-              } else {
-                return const SizedBox();
               }
+              return null;
             }),
           ),
         )
