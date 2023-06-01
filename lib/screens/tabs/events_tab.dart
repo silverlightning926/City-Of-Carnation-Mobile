@@ -25,7 +25,7 @@ class _EventsTabState extends State<EventsTab> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,7 +94,10 @@ class _EventsTabState extends State<EventsTab> {
         const SizedBox(height: 10),
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
             itemCount: widget.events.length,
             itemBuilder: ((context, index) {
               if (widget.events[index].startingTimestamp!.toDate().month ==
