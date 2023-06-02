@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class EventScreen extends StatelessWidget {
   const EventScreen({
@@ -18,7 +19,16 @@ class EventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MapController mapController = MapController();
 
-    return Scaffold(
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -37,15 +47,34 @@ class EventScreen extends StatelessWidget {
                 event.title!,
                 textAlign: TextAlign.left,
               ),
-              background: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(10),
-                ),
-                child: CachedNetworkImage(
-                  imageUrl: event.image!,
-                  color: const Color.fromARGB(188, 0, 0, 0),
-                  colorBlendMode: BlendMode.darken,
-                  fit: BoxFit.cover,
+              background: ShaderMask(
+                blendMode: BlendMode.dstIn,
+                shaderCallback: (rect) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(1.0),
+                      Colors.transparent,
+                    ],
+                    stops: const [
+                      0.0,
+                      1.0,
+                    ],
+                  ).createShader(
+                    Rect.fromLTRB(0, 0, rect.width, rect.height),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(10),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: event.image!,
+                    color: const Color.fromARGB(188, 0, 0, 0),
+                    colorBlendMode: BlendMode.darken,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

@@ -6,6 +6,7 @@ import 'package:city_of_carnation/services/validation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class UpdatePhoneScreen extends StatefulWidget {
   const UpdatePhoneScreen({
@@ -39,7 +40,16 @@ class _UpdatePhoneScreenState extends State<UpdatePhoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       appBar: AppBar(
         title: const Text('Update Phone Number'),
       ),

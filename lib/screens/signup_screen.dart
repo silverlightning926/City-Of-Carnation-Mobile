@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -41,231 +42,231 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LoaderOverlay(
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
+      appBar: AppBar(),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Text(
+              "Register",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+          Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  "Register",
-                  style: Theme.of(context).textTheme.displayMedium,
+              TextField(
+                controller: _nameController,
+                textCapitalization: TextCapitalization.words,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
                 ),
               ),
-              Column(
-                children: [
-                  TextField(
-                    controller: _nameController,
-                    textCapitalization: TextCapitalization.words,
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp(r"\s")),
-                    ],
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  InternationalPhoneNumberInput(
-                    ignoreBlank: true,
-                    onInputChanged: (PhoneNumber number) {
-                      phoneLocale = number.isoCode!;
-                    },
-                    textFieldController: _phoneController,
-                    selectorConfig: const SelectorConfig(
-                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                      trailingSpace: false,
-                    ),
-                    formatInput: false,
-                    autoValidateMode: AutovalidateMode.disabled,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      signed: false,
-                      decimal: false,
-                    ),
-                    inputDecoration: const InputDecoration(
-                      labelText: 'Phone Number',
-                      border: OutlineInputBorder(),
-                    ),
-                    maxLength: 10,
-                    initialValue: PhoneNumber(
-                      isoCode: 'US',
-                      dialCode: '+1',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  TextField(
-                    controller: _confirmPasswordController,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Confirm Password',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ],
+              const SizedBox(
+                height: 25,
               ),
-              Visibility(
-                visible: isErrored,
-                maintainState: true,
-                maintainSize: true,
-                maintainAnimation: true,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromARGB(70, 244, 67, 54),
-                    ),
-                    padding: const EdgeInsets.all(10.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        errorMessage,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ),
-                  ),
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                ],
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      context.loaderOverlay.show();
-
-                      NameValidationResult nameValidationResult =
-                          ValidationService.validateName(
-                        _nameController.text,
-                      );
-
-                      if (nameValidationResult != NameValidationResult.valid) {
-                        setState(() {
-                          isErrored = true;
-                          errorMessage = ValidationService.getNameErrorMessage(
-                              nameValidationResult);
-                        });
-                        context.loaderOverlay.hide();
-                        return;
-                      }
-
-                      EmailValidationResult emailValidationResult =
-                          ValidationService.validateEmail(
-                        _emailController.text,
-                      );
-
-                      if (emailValidationResult ==
-                          EmailValidationResult.invalid) {
-                        setState(() {
-                          isErrored = true;
-                          errorMessage = ValidationService.getEmailErrorMessage(
-                              emailValidationResult);
-                        });
-                        context.loaderOverlay.hide();
-                        return;
-                      }
-
-                      PhoneValidationResult phoneValidationResult =
-                          ValidationService.validatePhone(
-                        _phoneController.text,
-                      );
-
-                      if (phoneValidationResult !=
-                          PhoneValidationResult.valid) {
-                        setState(() {
-                          isErrored = true;
-                          errorMessage = ValidationService.getPhoneErrorMessage(
-                              phoneValidationResult);
-                        });
-                        context.loaderOverlay.hide();
-                        return;
-                      }
-
-                      PasswordValidationResult passwordValidationResult =
-                          ValidationService.validatePassword(
-                        _passwordController.text,
-                        _confirmPasswordController.text,
-                      );
-
-                      if (passwordValidationResult !=
-                          PasswordValidationResult.valid) {
-                        setState(() {
-                          isErrored = true;
-                          errorMessage =
-                              ValidationService.getPasswordErrorMessage(
-                                  passwordValidationResult);
-                        });
-                        context.loaderOverlay.hide();
-                        return;
-                      }
-
-                      try {
-                        createUser().then((value) {
-                          context.loaderOverlay.hide();
-
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoadingScreen(),
-                              settings:
-                                  const RouteSettings(name: 'LoadingScreen'),
-                            ),
-                            (route) => false,
-                          );
-                        });
-                      } catch (e) {
-                        setState(() {
-                          isErrored = true;
-                          errorMessage =
-                              'Something went wrong. Please try again';
-                        });
-                        context.loaderOverlay.hide();
-                        return;
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF6C63FF),
-                    ),
-                    child: const Text('Register'),
-                  ),
-                ],
+              const SizedBox(
+                height: 25,
+              ),
+              InternationalPhoneNumberInput(
+                ignoreBlank: true,
+                onInputChanged: (PhoneNumber number) {
+                  phoneLocale = number.isoCode!;
+                },
+                textFieldController: _phoneController,
+                selectorConfig: const SelectorConfig(
+                  selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                  trailingSpace: false,
+                ),
+                formatInput: false,
+                autoValidateMode: AutovalidateMode.disabled,
+                keyboardType: const TextInputType.numberWithOptions(
+                  signed: false,
+                  decimal: false,
+                ),
+                inputDecoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                ),
+                maxLength: 10,
+                initialValue: PhoneNumber(
+                  isoCode: 'US',
+                  dialCode: '+1',
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              TextField(
+                controller: _confirmPasswordController,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  labelText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                ),
               ),
             ],
           ),
-        ),
+          Visibility(
+            visible: isErrored,
+            maintainState: true,
+            maintainSize: true,
+            maintainAnimation: true,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(70, 244, 67, 54),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    errorMessage,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  context.loaderOverlay.show();
+
+                  NameValidationResult nameValidationResult =
+                      ValidationService.validateName(
+                    _nameController.text,
+                  );
+
+                  if (nameValidationResult != NameValidationResult.valid) {
+                    setState(() {
+                      isErrored = true;
+                      errorMessage = ValidationService.getNameErrorMessage(
+                          nameValidationResult);
+                    });
+                    context.loaderOverlay.hide();
+                    return;
+                  }
+
+                  EmailValidationResult emailValidationResult =
+                      ValidationService.validateEmail(
+                    _emailController.text,
+                  );
+
+                  if (emailValidationResult == EmailValidationResult.invalid) {
+                    setState(() {
+                      isErrored = true;
+                      errorMessage = ValidationService.getEmailErrorMessage(
+                          emailValidationResult);
+                    });
+                    context.loaderOverlay.hide();
+                    return;
+                  }
+
+                  PhoneValidationResult phoneValidationResult =
+                      ValidationService.validatePhone(
+                    _phoneController.text,
+                  );
+
+                  if (phoneValidationResult != PhoneValidationResult.valid) {
+                    setState(() {
+                      isErrored = true;
+                      errorMessage = ValidationService.getPhoneErrorMessage(
+                          phoneValidationResult);
+                    });
+                    context.loaderOverlay.hide();
+                    return;
+                  }
+
+                  PasswordValidationResult passwordValidationResult =
+                      ValidationService.validatePassword(
+                    _passwordController.text,
+                    _confirmPasswordController.text,
+                  );
+
+                  if (passwordValidationResult !=
+                      PasswordValidationResult.valid) {
+                    setState(() {
+                      isErrored = true;
+                      errorMessage = ValidationService.getPasswordErrorMessage(
+                          passwordValidationResult);
+                    });
+                    context.loaderOverlay.hide();
+                    return;
+                  }
+
+                  try {
+                    createUser().then((value) {
+                      context.loaderOverlay.hide();
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoadingScreen(),
+                          settings: const RouteSettings(name: 'LoadingScreen'),
+                        ),
+                        (route) => false,
+                      );
+                    });
+                  } catch (e) {
+                    setState(() {
+                      isErrored = true;
+                      errorMessage = 'Something went wrong. Please try again';
+                    });
+                    context.loaderOverlay.hide();
+                    return;
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6C63FF),
+                ),
+                child: const Text('Register'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

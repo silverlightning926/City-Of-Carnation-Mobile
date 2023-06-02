@@ -8,6 +8,7 @@ import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -78,7 +79,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return const ScaffoldGradientBackground(
+      gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       body: Center(
         child: SpinKitFadingCube(
           size: 100.0,

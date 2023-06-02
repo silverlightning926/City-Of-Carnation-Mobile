@@ -2,6 +2,7 @@ import 'package:city_of_carnation/services/auth_service.dart';
 import 'package:city_of_carnation/services/validation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -24,7 +25,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       appBar: AppBar(
         title: const Text('Forgot Password'),
       ),

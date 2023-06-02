@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -17,14 +18,23 @@ class SettingsScreen extends StatelessWidget {
       initialData: userData,
       stream: userDataStream,
       builder: (context, snapshot) {
-        return Scaffold(
+        return ScaffoldGradientBackground(
+          gradient: const LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 37, 7, 128),
+              Color(0xFF030417),
+              Color(0xFF03040c),
+            ],
+          ),
           appBar: AppBar(
             title: const Text('Settings'),
           ),
           body: SettingsList(
             darkTheme: const SettingsThemeData(
-              settingsListBackground: Colors.black,
-              settingsSectionBackground: Colors.black,
+              settingsListBackground: Colors.transparent,
+              settingsSectionBackground: Colors.transparent,
             ),
             applicationType: ApplicationType.both,
             platform: Platform.isAndroid

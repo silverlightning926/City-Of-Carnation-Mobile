@@ -5,6 +5,7 @@ import 'package:city_of_carnation/screens/update_profile_screens/update_phone_nu
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/screens/update_profile_screens/update_profile_photo_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({
@@ -21,7 +22,16 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       appBar: AppBar(),
       body: ListView(
         padding: const EdgeInsets.all(20),

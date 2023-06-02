@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class CreateWorkOrderScreen extends StatefulWidget {
   const CreateWorkOrderScreen({super.key});
@@ -51,7 +52,16 @@ class _CreateWorkOrderScreenState extends State<CreateWorkOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text(

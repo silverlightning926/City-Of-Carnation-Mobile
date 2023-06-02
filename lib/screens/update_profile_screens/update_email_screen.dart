@@ -5,6 +5,7 @@ import 'package:city_of_carnation/services/validation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class UpdateEmailScreen extends StatefulWidget {
   const UpdateEmailScreen({
@@ -38,7 +39,16 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      child: ScaffoldGradientBackground(
+        gradient: const LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color.fromARGB(255, 37, 7, 128),
+            Color(0xFF030417),
+            Color(0xFF03040c),
+          ],
+        ),
         appBar: AppBar(
           title: const Text('Update Email'),
         ),

@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_of_carnation/serialized/post.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key, required this.post});
@@ -20,7 +23,16 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldGradientBackground(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color.fromARGB(255, 37, 7, 128),
+          Color(0xFF030417),
+          Color(0xFF03040c),
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -39,15 +51,34 @@ class NewsScreen extends StatelessWidget {
                 post.title!,
                 textAlign: TextAlign.left,
               ),
-              background: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(10),
-                ),
-                child: CachedNetworkImage(
-                  imageUrl: post.image!,
-                  color: const Color.fromARGB(188, 0, 0, 0),
-                  colorBlendMode: BlendMode.darken,
-                  fit: BoxFit.cover,
+              background: ShaderMask(
+                blendMode: BlendMode.dstIn,
+                shaderCallback: (rect) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(1.0),
+                      Colors.transparent,
+                    ],
+                    stops: const [
+                      0.0,
+                      1.0,
+                    ],
+                  ).createShader(
+                    Rect.fromLTRB(0, 0, rect.width, rect.height),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(10),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: post.image!,
+                    color: const Color.fromARGB(188, 0, 0, 0),
+                    colorBlendMode: BlendMode.darken,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
