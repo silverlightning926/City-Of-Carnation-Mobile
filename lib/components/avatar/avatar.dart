@@ -72,15 +72,29 @@ class NoImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: radius,
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.purple,
-      child: Text(
-        name == '' ? '' : InitialName.parseName(name, count).toUpperCase(),
-        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontSize: fontsize,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.purple,
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(1, 2),
+            blurRadius: 10,
+            color: Colors.black.withOpacity(0.3),
+            spreadRadius: 3,
+          )
+        ],
+      ),
+      child: CircleAvatar(
+        radius: radius,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.purple,
+        child: Text(
+          name == '' ? '' : InitialName.parseName(name, count).toUpperCase(),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontSize: fontsize,
+              ),
+        ),
       ),
     );
   }
