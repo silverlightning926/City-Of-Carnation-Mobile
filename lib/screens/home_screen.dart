@@ -9,17 +9,18 @@ import 'package:city_of_carnation/serialized/post.dart';
 import 'package:city_of_carnation/serialized/user_data.dart';
 import 'package:city_of_carnation/serialized/work_order.dart';
 import 'package:flutter/material.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
-    super.key,
+    Key? key,
     required this.userData,
     required this.userDataStream,
     required this.posts,
     required this.events,
     required this.workOrders,
     required this.workOrderStream,
-  });
+  }) : super(key: key);
 
   final UserData userData;
   final Stream<UserData> userDataStream;
@@ -68,7 +69,16 @@ class _HomeScreenState extends State<HomeScreen> {
       child: StreamBuilder(
         stream: widget.userDataStream,
         initialData: widget.userData,
-        builder: (context, snapshot) => Scaffold(
+        builder: (context, snapshot) => ScaffoldGradientBackground(
+          gradient: const LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 37, 7, 128),
+              Color(0xFF030417),
+              Color(0xFF03040c),
+            ],
+          ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Text(
