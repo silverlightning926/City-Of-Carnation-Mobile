@@ -92,22 +92,20 @@ class _EventsTabState extends State<EventsTab> {
           ),
         ),
         const SizedBox(height: 10),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 10,
-            ),
-            itemCount: widget.events.length,
-            itemBuilder: ((context, index) {
-              if (widget.events[index].startingTimestamp!.toDate().month ==
-                      selectedMonth &&
-                  widget.events[index].startingTimestamp!.toDate().year ==
-                      selectedYear) {
-                return EventCard(event: widget.events[index]);
-              }
-              return null;
-            }),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
+          child: Column(
+            children: [
+              for (final event in widget.events)
+                if (event.startingTimestamp!.toDate().month == selectedMonth &&
+                    event.startingTimestamp!.toDate().year == selectedYear)
+                  EventCard(
+                    event: event,
+                  ),
+            ],
           ),
         )
       ],

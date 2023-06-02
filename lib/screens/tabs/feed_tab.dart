@@ -12,13 +12,11 @@ class FeedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Padding(
       padding: const EdgeInsets.all(20),
-      itemCount: posts.length,
-      itemBuilder: ((context, index) => Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: NewsCard(post: posts[index]),
-          )),
+      child: Column(
+        children: posts.map((post) => NewsCard(post: post)).toList(),
+      ),
     );
   }
 }

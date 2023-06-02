@@ -26,16 +26,16 @@ class CityOfCarnation extends StatelessWidget {
     return MaterialApp(
       title: 'City Of Carnation',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.black,
         appBarTheme: const AppBarTheme(
           elevation: 0,
           color: Colors.transparent,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.transparent,
-          selectedItemColor: Colors.teal[200],
-          unselectedItemColor: Colors.grey,
           elevation: 0,
+          enableFeedback: true,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
         ),
       ),
       navigatorObservers: [

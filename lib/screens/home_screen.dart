@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:city_of_carnation/components/avatar/profile_picture.dart';
 import 'package:city_of_carnation/screens/profile_screen.dart';
 import 'package:city_of_carnation/screens/tabs/events_tab.dart';
@@ -70,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
         stream: widget.userDataStream,
         initialData: widget.userData,
         builder: (context, snapshot) => ScaffoldGradientBackground(
+          extendBody: true,
+          extendBodyBehindAppBar: true,
           gradient: const LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -79,85 +83,122 @@ class _HomeScreenState extends State<HomeScreen> {
               Color(0xFF03040c),
             ],
           ),
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              [
-                'Welcome ${snapshot.data?.name?.split(' ')[0]}!',
-                'Notify',
-                'Feed',
-                'Events',
-              ][_selectedIndex],
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Ink(
-                  child: InkWell(
-                    customBorder: const CircleBorder(),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfileScreen(
-                            userData: snapshot.data!,
-                            userDataStream: widget.userDataStream,
-                          ),
+          body: CustomScrollView(
+            primary: true,
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                title: Text(
+                  [
+                    'Welcome ${snapshot.data?.name?.split(' ')[0]}!',
+                    'Notify',
+                    'Feed',
+                    'Events',
+                  ][_selectedIndex],
+                ),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Ink(
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfileScreen(
+                                userData: snapshot.data!,
+                                userDataStream: widget.userDataStream,
+                              ),
+                            ),
+                          );
+                        },
+                        child: ProfilePicture(
+                          radius: 17,
+                          fontsize: 10,
+                          name: snapshot.data?.name ?? '',
+                          img: snapshot.data?.profilePicture,
                         ),
-                      );
-                    },
-                    child: ProfilePicture(
-                      radius: 17,
-                      fontsize: 10,
-                      name: snapshot.data?.name ?? '',
-                      img: snapshot.data?.profilePicture,
+                      ),
                     ),
                   ),
+                ],
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    [
+                      HomeTab(
+                        featuredPost: _featuredPost,
+                        upcomingEvents: _upcomingEvents,
+                      ),
+                      NotifyTab(
+                        workOrders: widget.workOrders,
+                        workOrderStream: widget.workOrderStream,
+                      ),
+                      FeedTab(
+                        posts: widget.posts,
+                      ),
+                      EventsTab(
+                        events: widget.events,
+                      ),
+                    ][_selectedIndex],
+                  ],
                 ),
               ),
             ],
           ),
-          body: IndexedStack(
-            index: _selectedIndex,
-            children: [
-              HomeTab(
-                featuredPost: _featuredPost,
-                upcomingEvents: _upcomingEvents,
+          bottomNavigationBar: Padding(
+            padding: EdgeInsets.only(
+              right: MediaQuery.of(context).size.width * 0.04,
+              left: MediaQuery.of(context).size.width * 0.04,
+              bottom: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, -2),
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
-              NotifyTab(
-                workOrders: widget.workOrders,
-                workOrderStream: widget.workOrderStream,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.3),
+                    ),
+                    child: BottomNavigationBar(
+                      onTap: (value) => setState(() => _selectedIndex = value),
+                      currentIndex: _selectedIndex,
+                      items: const [
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.home),
+                          label: 'Home',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.construction),
+                          label: 'Notify',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.newspaper),
+                          label: 'Feed',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.calendar_month),
+                          label: 'Events',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              FeedTab(
-                posts: widget.posts,
-              ),
-              EventsTab(
-                events: widget.events,
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            onTap: (value) => setState(() => _selectedIndex = value),
-            currentIndex: _selectedIndex,
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.construction),
-                label: 'Notify',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.newspaper),
-                label: 'Feed',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month),
-                label: 'Events',
-              ),
-            ],
+            ),
           ),
         ),
       ),

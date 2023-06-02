@@ -16,62 +16,64 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white.withOpacity(0.175),
-          ),
-          child: Text(
-            'Welcome to the City Of Carnation mobile app! We want to make it easier for you to connect with your city. We hope you enjoy the app and find it useful. If you have any questions or feedback, please email us at cityhall@carnationwa.gov.',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                'Featured News',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white.withOpacity(0.175),
             ),
-            NewsCard(post: featuredPost),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Visibility(
-          visible: upcomingEvents.isNotEmpty,
-          child: Column(
+            child: Text(
+              'Welcome to the City Of Carnation mobile app! We want to make it easier for you to connect with your city. We hope you enjoy the app and find it useful. If you have any questions or feedback, please email us at cityhall@carnationwa.gov.',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
-                  'Upcoming Events',
+                  'Featured News',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => MiniEventCard(
-                          event: upcomingEvents[index],
-                        ),
-                    itemCount: upcomingEvents.length,
-                    scrollDirection: Axis.horizontal),
-              ),
+              NewsCard(post: featuredPost),
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: 10),
+          Visibility(
+            visible: upcomingEvents.isNotEmpty,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    'Upcoming Events',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => MiniEventCard(
+                            event: upcomingEvents[index],
+                          ),
+                      itemCount: upcomingEvents.length,
+                      scrollDirection: Axis.horizontal),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
