@@ -12,84 +12,79 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(10),
-        child: Ink(
-          width: double.infinity,
-          height: 200,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              colorFilter: const ColorFilter.mode(
-                Color.fromARGB(188, 0, 0, 0),
-                BlendMode.darken,
-              ),
-              fit: BoxFit.cover,
-              image: CachedNetworkImageProvider(
-                event.image!,
-              ),
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EventScreen(
-                    event: event,
-                  ),
-                  settings: const RouteSettings(name: 'EventScreen'),
-                ),
-              );
+    return GestureDetector(
+      onTap: () {
+        AnalyticsService.logEvent(
+          name: 'event_card_tapped',
+          parameters: {
+            'event_id': event.id,
+          },
+        );
 
-              AnalyticsService.logEventCardClick(
-                id: event.id ?? 'No ID',
-                title: event.title ?? 'No Title',
-              );
-            },
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => EventScreen(
+              event: event,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.175),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: ShaderMask(
+                blendMode: BlendMode.dstATop,
+                shaderCallback: (rect) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white.withOpacity(1.0),
+                      Colors.white.withOpacity(0.75),
+                      Colors.white.withOpacity(0.0),
+                    ],
+                    stops: const [0.0, 0.4, 1.0],
+                  ).createShader(
+                    Rect.fromLTRB(0, 0, rect.width, rect.height),
+                  );
+                },
+                child: CachedNetworkImage(
+                  imageUrl: event.image!,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 150,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          event.title!,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          event.locationName!,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          DateFormat.yMMMMd().format(
-                            event.startingTimestamp!.toDate().toLocal(),
-                          ),
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ],
-                    ),
+                  Text(
+                    event.title!,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const Icon(
-                    Icons.chevron_right,
-                    color: Colors.white,
-                    size: 50,
+                  const SizedBox(height: 10),
+                  Text(
+                    DateFormat.yMMMMd()
+                        .format(event.startingTimestamp!.toDate()),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
