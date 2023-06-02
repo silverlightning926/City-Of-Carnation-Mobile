@@ -73,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
         initialData: widget.userData,
         builder: (context, snapshot) => ScaffoldGradientBackground(
           extendBody: true,
-          extendBodyBehindAppBar: true,
           gradient: const LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,

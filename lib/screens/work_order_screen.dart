@@ -9,9 +9,9 @@ import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class WorkOrderScreen extends StatelessWidget {
   const WorkOrderScreen({
-    super.key,
+    Key? key,
     required this.workOrder,
-  });
+  }) : super(key: key);
 
   final WorkOrder workOrder;
 
@@ -30,21 +30,12 @@ class WorkOrderScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            pinned: true,
-            expandedHeight: 250.0,
-            collapsedHeight: 125.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                color: Colors.blue,
-              ),
-              centerTitle: false,
-              titlePadding: const EdgeInsets.all(20),
-              title: Text(
-                workOrder.title!,
-                textAlign: TextAlign.left,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+            centerTitle: false,
+            title: Text(
+              workOrder.title!,
+              textAlign: TextAlign.left,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             actions: [
               IconButton(
@@ -79,7 +70,7 @@ class WorkOrderScreen extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -116,25 +107,33 @@ class WorkOrderScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
+                      Text(
+                        DateFormat.yMMMM()
+                            .format(workOrder.timestamp!.toDate()),
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 20),
                       Text(
                         workOrder.description!,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const SizedBox(height: 15),
-                      (workOrder.image != null && workOrder.image != '')
-                          ? ClipRRect(
-                              child: CachedNetworkImage(
-                                  imageUrl: workOrder.image!),
-                            )
-                          : const SizedBox(),
+                      const SizedBox(height: 20),
+                      if (workOrder.image != null)
+                        CachedNetworkImage(
+                          imageUrl: workOrder.image!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 200,
+                        ),
+                      const SizedBox(height: 75),
                     ],
                   ),
                 );
               },
               childCount: 1,
             ),
-          )
+          ),
         ],
       ),
     );

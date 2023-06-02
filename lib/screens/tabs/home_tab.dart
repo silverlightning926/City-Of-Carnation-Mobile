@@ -60,15 +60,18 @@ class HomeTab extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 250,
+                  height: 275,
+                  width: double.infinity,
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => MiniEventCard(
-                            event: upcomingEvents[index],
-                          ),
-                      itemCount: upcomingEvents.length,
-                      scrollDirection: Axis.horizontal),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => MiniEventCard(
+                      event: upcomingEvents[index],
+                    ),
+                    itemCount: upcomingEvents.length,
+                    scrollDirection: Axis.horizontal,
+                  ),
                 ),
+                const SizedBox(height: 75),
               ],
             ),
           ),

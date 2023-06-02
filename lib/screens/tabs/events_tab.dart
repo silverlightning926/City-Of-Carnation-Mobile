@@ -107,7 +107,8 @@ class _EventsTabState extends State<EventsTab> {
                   ),
             ],
           ),
-        )
+        ),
+        const SizedBox(height: 75),
       ],
     );
   }
