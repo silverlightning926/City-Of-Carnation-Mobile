@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.carnationwa.city_of_carnation">
    <application
-        android:label="city_of_carnation"
+        android:label="City of Carnation"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
