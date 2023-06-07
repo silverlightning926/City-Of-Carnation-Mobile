@@ -109,22 +109,19 @@ class WorkOrderScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        DateFormat.yMMMM()
-                            .format(workOrder.timestamp!.toDate()),
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
                         workOrder.description!,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 20),
                       if (workOrder.image != null)
-                        CachedNetworkImage(
-                          imageUrl: workOrder.image!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: 200,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            imageUrl: workOrder.image!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 200,
+                          ),
                         ),
                       const SizedBox(height: 75),
                     ],

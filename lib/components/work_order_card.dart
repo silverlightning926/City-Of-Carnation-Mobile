@@ -32,66 +32,69 @@ class WorkOrderCard extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.175),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              child: ShaderMask(
-                blendMode: BlendMode.dstATop,
-                shaderCallback: (rect) {
-                  return LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.white.withOpacity(1.0),
-                      Colors.white.withOpacity(0.75),
-                      Colors.white.withOpacity(0.0),
-                    ],
-                    stops: const [0.0, 0.4, 1.0],
-                  ).createShader(
-                    Rect.fromLTRB(0, 0, rect.width, rect.height),
-                  );
-                },
-                child: CachedNetworkImage(
-                  imageUrl: workOrder.image!,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 150,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.175),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                child: ShaderMask(
+                  blendMode: BlendMode.dstATop,
+                  shaderCallback: (rect) {
+                    return LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white.withOpacity(1.0),
+                        Colors.white.withOpacity(0.75),
+                        Colors.white.withOpacity(0.0),
+                      ],
+                      stops: const [0.0, 0.4, 1.0],
+                    ).createShader(
+                      Rect.fromLTRB(0, 0, rect.width, rect.height),
+                    );
+                  },
+                  child: CachedNetworkImage(
+                    imageUrl: workOrder.image!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 150,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    workOrder.title!,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    DateFormat.yMMMMd().format(workOrder.timestamp!.toDate()),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    workOrder.status!,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      workOrder.title!,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      DateFormat.yMMMMd().format(workOrder.timestamp!.toDate()),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      workOrder.status!,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
